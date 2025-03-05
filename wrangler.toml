@@ -1,0 +1,4 @@
+name = "college project"
+compatibility_date = "2025-02-06"
+compatibility_flags = ["nodejs_compat_v2"]
+pages_build_output_dir = "./dist"
