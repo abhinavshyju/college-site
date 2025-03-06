@@ -1,0 +1,35 @@
+---
+import { Phone, Mail } from "lucide-react";
+const navListOne = [
+  {
+    title: "Gallery",
+  },
+  {
+    title: "Students",
+  },
+];
+---
+
+<div class="w-full mx-auto">
+  <div class="max-w-screen-xl mx-auto">
+    <div class="px-4">
+      <div class="grid grid-cols-3">
+        <div class="flex flex-wrap gap-4 py-3">
+          <div class="flex gap-1 items-center font-medium hover:text-blue-600">
+            <Phone size={16} />
+            <h1>+91 9876543210</h1>
+          </div>
+          <div class="flex gap-1 items-center font-medium hover:text-blue-600">
+            <Mail size={16} />
+            <h1>castmsy@email.com</h1>
+          </div>
+        </div>
+        <div class="col-span-2 bg-blue-600 px-4 pt-2 rounded-b-2xl">
+          <div class="flex justify-between gap-4 items-center">
+            {navListOne.map((item) => <a>{item.title}</a>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
