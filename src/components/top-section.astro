@@ -1,0 +1,29 @@
+---
+const navLinks = [
+  { title: "GALLERY", path: "/" },
+  { title: "STUDENTS", path: "/" },
+  { title: "COMMITTEES AND CELLS", path: "/" },
+  { title: "College Resource", path: "/" },
+  { title: "LOGINS", path: "/" },
+  { title: "Contact US", path: "/" },
+  { title: "APPLY FOR TC", path: "/" },
+];
+---
+
+<div class="grid grid-cols-3 gap-2 items-center">
+  <div class="flex flex-wrap gap-4">
+    <div class="flex hover:text-primary">+91 987654321</div>
+    <div class="flex hover:text-primary">cas.tmsy@gmail.com</div>
+  </div>
+  <div class="col-span-2 w-full bg-primary rounded-b-md">
+    <div class="flex gap-2 justify-between px-4 text-white text-sm py-2">
+      {
+        navLinks.map((link) => (
+          <a href={link.path} class="hover:text-yellow-500">
+            {link.title}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>
