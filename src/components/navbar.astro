@@ -1,20 +1,24 @@
 ---
 import { NavigationMenuComponent } from "@/components/react/nav-menu";
+
+import MobileMenu from "@/components/react/mobile-menu";
 ---
 
-<div class="grid grid-cols-[600px_1fr] mt-6">
+<div
+  class="sm:grid sm:grid-cols-[600px_1fr] mt-2 sm:mt-6 px-2 flex justify-between items-center"
+>
   <div class="flex gap-4 items-center">
-    <img src="/assets/images/logo.png" alt="" class="w-24" />
+    <img src="/assets/images/logo.png" alt="" class="sm:w-24 w-16" />
     <div class="">
-      <h1 class="text-2xl font-semibold">
+      <h1 class="sm:text-2xl font-semibold">
         College of Applied Science, Thamassery
       </h1>
-      <p class="text-muted-foreground -mt-1">
+      <p class="text-muted-foreground -mt-1 text-xs sm:text-base">
         Affiliated to the Calicut University
       </p>
     </div>
   </div>
-  <div class="flex flex-wrap gap-4 items-center">
+  <div class="flex-wrap gap-4 items-center hidden sm:flex">
     <div class="">
       <button
         class="border border-primary py-2 px-4 text-primary hover:bg-primary hover:text-white text-sm"
@@ -22,6 +26,9 @@ import { NavigationMenuComponent } from "@/components/react/nav-menu";
         ADMISSION OPEN 2025</button
       >
     </div>
+  </div>
+  <div class="block sm:hidden">
+    <MobileMenu client:load />
   </div>
 </div>
 <div class="mt-2"><NavigationMenuComponent client:load /></div>
