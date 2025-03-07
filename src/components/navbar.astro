@@ -1,0 +1,27 @@
+---
+import { NavigationMenuComponent } from "@/components/react/nav-menu";
+---
+
+<div class="grid grid-cols-[600px_1fr] mt-6">
+  <div class="flex gap-4 items-center">
+    <img src="/assets/images/logo.png" alt="" class="w-24" />
+    <div class="">
+      <h1 class="text-2xl font-semibold">
+        College of Applied Science, Thamassery
+      </h1>
+      <p class="text-muted-foreground -mt-1">
+        Affiliated to the Calicut University
+      </p>
+    </div>
+  </div>
+  <div class="flex flex-wrap gap-4 items-center">
+    <div class="">
+      <button
+        class="border border-primary py-2 px-4 text-primary hover:bg-primary hover:text-white text-sm"
+      >
+        ADMISSION OPEN 2025</button
+      >
+    </div>
+  </div>
+</div>
+<div class="mt-2"><NavigationMenuComponent client:load /></div>
