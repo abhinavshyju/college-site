@@ -40,93 +40,95 @@ export default components;
 
 export function NavigationMenuComponent() {
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem className="">
-          <a href="/docs">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Home
-            </NavigationMenuLink>
-          </a>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>About Us</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      CAS Thamarassery
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      College of Applied Science, Thamarassery, is affiliated to
-                      the Calicut University and was established in 2012
-                    </p>
-                  </a>
-                </NavigationMenuLink>
-              </li>
-              <ListItem href="/" title="College History">
-                Our college History
-              </ListItem>
-              <ListItem href="/" title="Profile">
-                Our collge profile
-              </ListItem>
-              <ListItem href="/" title="Former Principals">
-                Our former Principals
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Academics</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid max-w-[400px] gap-3 p-4 md:max-w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
+    <div className="hidden sm:block">
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem className="">
+            <a href="/docs">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Home
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>About Us</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                <li className="row-span-3">
+                  <NavigationMenuLink asChild>
+                    <a
+                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                      href="/"
+                    >
+                      <div className="mb-2 mt-4 text-lg font-medium">
+                        CAS Thamarassery
+                      </div>
+                      <p className="text-sm leading-tight text-muted-foreground">
+                        College of Applied Science, Thamarassery, is affiliated
+                        to the Calicut University and was established in 2012
+                      </p>
+                    </a>
+                  </NavigationMenuLink>
+                </li>
+                <ListItem href="/" title="College History">
+                  Our college History
                 </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <a href="/">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Admissions
-            </NavigationMenuLink>
-          </a>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <a href="/">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Examinination
-            </NavigationMenuLink>
-          </a>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <a href="/">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Placements
-            </NavigationMenuLink>
-          </a>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <a href="/">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Alumini
-            </NavigationMenuLink>
-          </a>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+                <ListItem href="/" title="Profile">
+                  Our collge profile
+                </ListItem>
+                <ListItem href="/" title="Former Principals">
+                  Our former Principals
+                </ListItem>
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Academics</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid max-w-[400px] gap-3 p-4 md:max-w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                {components.map((component) => (
+                  <ListItem
+                    key={component.title}
+                    title={component.title}
+                    href={component.href}
+                  >
+                    {component.description}
+                  </ListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <a href="/">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Admissions
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <a href="/">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Examinination
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <a href="/">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Placements
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <a href="/">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Alumini
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </div>
   );
 }
 
