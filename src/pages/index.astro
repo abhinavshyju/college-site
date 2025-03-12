@@ -1,6 +1,14 @@
 ---
 import Hero from "@/components/hero.astro";
 import Layout from "../layouts/Layout.astro";
+import Welcome from "@/components/welcome.astro";
+import Placement from "@/components/placement.astro";
+import Footer from "@/components/footer.astro";
+import Contact from "@/components/contact.astro";
+import Event from "@/components/events.astro";
+import Principalsection from "@/components/react/principalsction";
+import QuestionSection from "@/components/react/question-section";
+import Facility from "@/components/facility.astro";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -8,4 +16,14 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout>
   <Hero />
+  <Welcome />
+  <Principalsection client:load />
+  <Facility />
+  <div class="mt-8">
+    <Placement />
+  </div>
+  <Event />
+  <QuestionSection client:load />
+  <Contact />
+  <Footer />
 </Layout>
