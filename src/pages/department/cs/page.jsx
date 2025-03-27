@@ -1,15 +1,4 @@
-import prisma from "@/prisma/db";
-import React from "react";
 import { TeachersList } from "../components/teacherListCard";
-
-export const getData = async () => {
-  const staff = await prisma.staff.findMany({
-    where: {
-      department: "cs",
-    },
-  });
-  return staff;
-};
 
 async function SingleDepartmentPage() {
   const staff = await getData();
