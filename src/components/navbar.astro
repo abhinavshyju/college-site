@@ -1,35 +1,34 @@
 ---
-import { Phone, Mail } from "lucide-react";
-const navListOne = [
-  {
-    title: "Gallery",
-  },
-  {
-    title: "Students",
-  },
-];
+import { NavigationMenuComponent } from "@/components/react/nav-menu";
+
+import MobileMenu from "@/components/react/mobile-menu";
 ---
 
-<div class="w-full mx-auto">
-  <div class="max-w-screen-xl mx-auto">
-    <div class="px-4">
-      <div class="grid grid-cols-3">
-        <div class="flex flex-wrap gap-4 py-3">
-          <div class="flex gap-1 items-center font-medium hover:text-blue-600">
-            <Phone size={16} />
-            <h1>+91 9876543210</h1>
-          </div>
-          <div class="flex gap-1 items-center font-medium hover:text-blue-600">
-            <Mail size={16} />
-            <h1>castmsy@email.com</h1>
-          </div>
-        </div>
-        <div class="col-span-2 bg-blue-600 px-4 pt-2 rounded-b-2xl">
-          <div class="flex justify-between gap-4 items-center">
-            {navListOne.map((item) => <a>{item.title}</a>)}
-          </div>
-        </div>
-      </div>
+<div
+  class="sm:grid sm:grid-cols-[600px_1fr] mt-2 sm:mt-6 px-2 flex justify-between items-center"
+>
+  <div class="flex gap-4 items-center">
+    <img src="/assets/images/logo.png" alt="" class="sm:w-24 w-16" />
+    <div class="">
+      <h1 class="sm:text-2xl font-semibold">
+        College of Applied Science, Thamassery
+      </h1>
+      <p class="text-muted-foreground -mt-1 text-xs sm:text-base">
+        Affiliated to the Calicut University
+      </p>
     </div>
   </div>
+  <div class="flex-wrap gap-4 items-center hidden sm:flex">
+    <div class="">
+      <button
+        class="border border-primary py-2 px-4 text-primary hover:bg-primary hover:text-white text-sm"
+      >
+        ADMISSION OPEN 2025</button
+      >
+    </div>
+  </div>
+  <div class="block sm:hidden">
+    <MobileMenu client:load />
+  </div>
 </div>
+<div class="mt-2"><NavigationMenuComponent client:load /></div>

@@ -1,5 +1,7 @@
 ---
 import Navbar from "@/components/navbar.astro";
+
+import TopSection from "@/components/top-section.astro";
 import "@/styles/global.css";
 ---
 
@@ -13,7 +15,14 @@ import "@/styles/global.css";
     <title>Astro Basics</title>
   </head>
   <body>
-    <Navbar />
+
+    <div class="">
+      <div class="max-w-7xl mx-auto">
+        <TopSection />
+        <Navbar />
+      </div>
+    </div>
+
     <slot />
   </body>
 </html>
