@@ -1,6 +1,7 @@
 ---
 import Hero from "@/components/hero.astro";
 import Layout from "../layouts/Layout.astro";
+
 import Welcome from "@/components/welcome.astro";
 import Placement from "@/components/placement.astro";
 import Footer from "@/components/footer.astro";
@@ -12,10 +13,12 @@ import Facility from "@/components/facility.astro";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+
 ---
 
 <Layout>
   <Hero />
+
   <Welcome />
   <Principalsection client:load />
   <Facility />
@@ -26,4 +29,5 @@ import Facility from "@/components/facility.astro";
   <QuestionSection client:load />
   <Contact />
   <Footer />
+
 </Layout>
