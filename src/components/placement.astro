@@ -11,6 +11,7 @@ const supabase = createClient(
     },
   }
 );
+let placementsWithUrls = [];
 const { data: placements, error } = await supabase
   .from("placements")
   .select("*")
@@ -18,21 +19,18 @@ const { data: placements, error } = await supabase
 
 if (error) {
   console.error("Error fetching placements:", error);
-  return new Response(JSON.stringify({ error: "Failed to fetch placements" }), {
-    status: 500,
+} else {
+  placementsWithUrls = placements.map((placement) => {
+    const imageUrl = supabase.storage
+      .from("images")
+      .getPublicUrl(placement.image_url).data.publicUrl;
+
+    return {
+      ...placement,
+      url: imageUrl,
+    };
   });
 }
-
-const placementsWithUrls = placements.map((placement) => {
-  const imageUrl = supabase.storage
-    .from("images")
-    .getPublicUrl(placement.image_url).data.publicUrl;
-
-  return {
-    ...placement,
-    url: imageUrl,
-  };
-});
 ---
 
 <div class="max-w-7xl mx-auto px-8" id="placement">
@@ -40,7 +38,7 @@ const placementsWithUrls = placements.map((placement) => {
     <h2 class="md:text-xl font-bold">Career Success</h2>
     <h1 class="md:text-3xl font-semibold text-primary mb-4">Placed Students</h1>
     {
-      placements.length > 0 ? (
+      placementsWithUrls.length > 0 ? (
         <PlacementSlider client:load items={placementsWithUrls} />
       ) : (
         <p>No placements found.</p>
