@@ -8,6 +8,13 @@
       "when": 1741200461482,
       "tag": "0000_bizarre_nightmare",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1748581638927,
+      "tag": "0001_special_havok",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,129 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Button } from "@/components/ui/button";
+---
+
+<Layout>
+  <div class="flex min-h-screen items-center justify-center">
+    <div class="w-full max-w-md space-y-8 rounded-lg bg-white p-6 shadow-lg">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold tracking-tight">
+          Sign in to your account
+        </h2>
+      </div>
+      <form class="mt-8 space-y-6" id="loginForm">
+        <div class="space-y-4 rounded-md">
+          <div>
+            <label
+              for="username"
+              class="block text-sm font-medium text-gray-700">Username</label
+            >
+            <input
+              id="username"
+              name="username"
+              type="text"
+              required
+              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
+              placeholder="Enter your username"
+            />
+          </div>
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700">Password</label
+            >
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
+              placeholder="Enter your password"
+            />
+          </div>
+        </div>
+
+        <div id="errorMessage" class="hidden text-center text-sm text-red-600">
+        </div>
+
+        <div>
+          <Button
+            type="submit"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+          >
+            Sign in
+          </Button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let loginAttempts = 0;
+    const MAX_ATTEMPTS = 5;
+    const LOCKOUT_TIME = 15 * 60 * 1000; // 15 minutes in milliseconds
+    let lastAttemptTime = 0;
+
+    const loginForm = document.getElementById("loginForm");
+    const errorMessage = document.getElementById("errorMessage");
+
+    loginForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Check if user is locked out
+      if (loginAttempts >= MAX_ATTEMPTS) {
+        const timeElapsed = Date.now() - lastAttemptTime;
+        if (timeElapsed < LOCKOUT_TIME) {
+          const minutesLeft = Math.ceil((LOCKOUT_TIME - timeElapsed) / 60000);
+          showError(
+            `Too many login attempts. Please try again in ${minutesLeft} minutes.`
+          );
+          return;
+        } else {
+          // Reset attempts after lockout period
+          loginAttempts = 0;
+        }
+      }
+
+      const formData = new FormData(loginForm as HTMLFormElement);
+      const username = formData.get("username");
+      const password = formData.get("password");
+
+      try {
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Reset attempts on successful login
+          loginAttempts = 0;
+          // Redirect to dashboard or home page
+          window.location.href = "/";
+        } else {
+          loginAttempts++;
+          lastAttemptTime = Date.now();
+          showError(data.message || "Invalid username or password");
+
+          if (loginAttempts >= MAX_ATTEMPTS) {
+            showError(`Account locked. Please try again in 15 minutes.`);
+          }
+        }
+      } catch (error) {
+        showError("An error occurred. Please try again later.");
+      }
+    });
+
+    function showError(message: string) {
+      if (errorMessage) {
+        errorMessage.textContent = message;
+        errorMessage.classList.remove("hidden");
+      }
+    }
+  </script>
+</Layout>

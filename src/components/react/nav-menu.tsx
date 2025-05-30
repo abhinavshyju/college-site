@@ -16,23 +16,13 @@ import {
 const components: { title: string; href: string; description: string }[] = [
   {
     title: "Departments",
-    href: "/departments",
+    href: "/department",
     description: "Explore various academic departments in our college.",
   },
   {
     title: "Programs & Courses",
     href: "/programs",
     description: "Discover undergraduate and postgraduate programs offered.",
-  },
-  {
-    title: "Academic Calendar",
-    href: "/calendar",
-    description: "Stay updated with important academic dates and deadlines.",
-  },
-  {
-    title: "Syllabus",
-    href: "/syllabus",
-    description: "Access detailed syllabus for various courses and subjects.",
   },
 ];
 
@@ -44,7 +34,7 @@ export function NavigationMenuComponent() {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem className="">
-            <a href="/docs">
+            <a href="/">
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Home
               </NavigationMenuLink>
@@ -58,7 +48,7 @@ export function NavigationMenuComponent() {
                   <NavigationMenuLink asChild>
                     <a
                       className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
+                      href="/about"
                     >
                       <div className="mb-2 mt-4 text-lg font-medium">
                         CAS Thamarassery
@@ -70,15 +60,6 @@ export function NavigationMenuComponent() {
                     </a>
                   </NavigationMenuLink>
                 </li>
-                <ListItem href="/" title="College History">
-                  Our college History
-                </ListItem>
-                <ListItem href="/" title="Profile">
-                  Our collge profile
-                </ListItem>
-                <ListItem href="/" title="Former Principals">
-                  Our former Principals
-                </ListItem>
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
@@ -99,30 +80,17 @@ export function NavigationMenuComponent() {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <a href="/">
+            <a href="/admission">
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Admissions
               </NavigationMenuLink>
             </a>
           </NavigationMenuItem>
+
           <NavigationMenuItem>
-            <a href="/">
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Examinination
-              </NavigationMenuLink>
-            </a>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <a href="/">
+            <a href="/#placement">
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Placements
-              </NavigationMenuLink>
-            </a>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <a href="/">
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Alumini
               </NavigationMenuLink>
             </a>
           </NavigationMenuItem>

@@ -10,10 +10,20 @@ import {
 } from "@/components/ui/carousel";
 import PlacementCard from "./placement-card";
 
-export function PlacementSlider() {
+interface CardProp {
+  student_name: string;
+  company_name: string;
+  url: string;
+}
+
+interface PlacementSliderProps {
+  items: CardProp[];
+}
+
+export function PlacementSlider({ items }: PlacementSliderProps) {
   return (
     <Carousel
-      className="w-full "
+      className="w-full"
       plugins={[
         Autoplay({
           delay: 2000,
@@ -21,10 +31,14 @@ export function PlacementSlider() {
       ]}
     >
       <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {items?.map((item, index) => (
           <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
             <div className="p-1">
-              <PlacementCard />
+              <PlacementCard
+                company={item.company_name}
+                name={item.student_name}
+                url={item.url}
+              />
             </div>
           </CarouselItem>
         ))}

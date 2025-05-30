@@ -1,0 +1,39 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+const departmentLinks = [
+  {
+    title: "Computer Department",
+    path: "/department/cs",
+  },
+  {
+    title: "Commerce Department",
+    path: "/department/commerce",
+  },
+  {
+    title: "English Department",
+    path: "/department/english",
+  },
+];
+---
+
+<Layout>
+  <section class="max-w-4xl mx-auto py-12 px-6">
+    <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">
+      Departments
+    </h1>
+    <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+      {
+        departmentLinks.map((link) => (
+          <a
+            href={link.path}
+            class="block p-6 bg-white rounded-xl shadow-md hover:bg-red-50 hover:text-red-700 transition duration-200 border border-gray-200"
+          >
+            <h2 class="text-xl font-semibold">{link.title}</h2>
+            <p class="text-sm text-gray-500 mt-1">View details</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
