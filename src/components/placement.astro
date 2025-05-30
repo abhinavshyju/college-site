@@ -1,48 +1,13 @@
 ---
 import { PlacementSlider } from "./react/placement-slider";
 import { createClient } from "@supabase/supabase-js";
-const supabase = createClient(
-  import.meta.env.PUBLIC_SUPABASE_URL,
-  import.meta.env.SUPABASE_SERVICE_ROLE_KEY,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  }
-);
-let placementsWithUrls = [];
-const { data: placements, error } = await supabase
-  .from("placements")
-  .select("*")
-  .order("created_at", { ascending: false });
-
-if (error) {
-  console.error("Error fetching placements:", error);
-} else {
-  placementsWithUrls = placements.map((placement) => {
-    const imageUrl = supabase.storage
-      .from("images")
-      .getPublicUrl(placement.image_url).data.publicUrl;
-
-    return {
-      ...placement,
-      url: imageUrl,
-    };
-  });
-}
 ---
 
 <div class="max-w-7xl mx-auto px-8" id="placement">
   <div class="w-full">
     <h2 class="md:text-xl font-bold">Career Success</h2>
     <h1 class="md:text-3xl font-semibold text-primary mb-4">Placed Students</h1>
-    {
-      placementsWithUrls.length > 0 ? (
-        <PlacementSlider client:load items={placementsWithUrls} />
-      ) : (
-        <p>No placements found.</p>
-      )
-    }
+
+    <PlacementSlider client:load />
   </div>
 </div>

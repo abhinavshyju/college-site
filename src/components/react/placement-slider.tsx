@@ -13,14 +13,26 @@ import PlacementCard from "./placement-card";
 interface CardProp {
   student_name: string;
   company_name: string;
-  url: string;
+  public_image_url: string;
 }
 
 interface PlacementSliderProps {
   items: CardProp[];
 }
 
-export function PlacementSlider({ items }: PlacementSliderProps) {
+export function PlacementSlider() {
+  const [items, setitems] = React.useState<CardProp[]>([]);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/api/admin/placements");
+      if (response.ok) {
+        const data = await response.json();
+        setitems(data.placements);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <Carousel
       className="w-full"
@@ -31,17 +43,21 @@ export function PlacementSlider({ items }: PlacementSliderProps) {
       ]}
     >
       <CarouselContent>
-        {items?.map((item, index) => (
-          <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
-            <div className="p-1">
-              <PlacementCard
-                company={item.company_name}
-                name={item.student_name}
-                url={item.url}
-              />
-            </div>
-          </CarouselItem>
-        ))}
+        {items.length > 0 ? (
+          items?.map((item, index) => (
+            <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
+              <div className="p-1">
+                <PlacementCard
+                  company={item.company_name}
+                  name={item.student_name}
+                  url={item.public_image_url}
+                />
+              </div>
+            </CarouselItem>
+          ))
+        ) : (
+          <>asdas</>
+        )}
       </CarouselContent>
     </Carousel>
   );
