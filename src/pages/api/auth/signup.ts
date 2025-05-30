@@ -85,7 +85,7 @@ export const POST: APIRoute = async ({ request }) => {
     );
   } catch (error) {
     console.error("Signup error:", error);
-    return new Response(JSON.stringify({ message: "Internal server error" }), {
+    return new Response(JSON.stringify({ message: error }), {
       status: 500,
     });
   }
