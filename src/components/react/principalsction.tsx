@@ -7,7 +7,7 @@ function Principalsection() {
         <div>
           <h3 className="font-medium mb-5 text-2xl">Principal’s Desk</h3>
           <p className="text-sm font-medium text-start mb-10 text-gray-900">
-            Smt.Radhika KM
+            Mrs.Radhika KM
             <br />
             The Principal, <br />
             College of Applied Science Thamarassery <br />
@@ -28,7 +28,7 @@ function Principalsection() {
           <img
             width={300}
             height={300}
-            src="/assets/images/princi.jpg"
+            src="/assets/images/princi.jpeg"
             className="rounded-md shadow-md mb-4"
           />
         </div>
