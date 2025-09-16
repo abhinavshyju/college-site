@@ -3,13 +3,14 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev --host",
+    "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro build && wrangler pages dev",
     "astro": "astro",
-    "db:push": "npx drizzle-kit push",
-    "db:generate": "npx drizzle-kit generate",
-    "db:migrate": "npx drizzle-kit migrate"
+    "deploy": "astro build && wrangler pages deploy",
+    "cf-typegen": "wrangler types",
+    "generate": "npx drizzle-kit generate",
+    "migrate": "npx drizzle-kit migrate"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.2.3",

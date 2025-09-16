@@ -1,0 +1,433 @@
+---
+import AdminLayout from "@/layouts/AdminLayout.astro";
+if (!Astro.locals.session) {
+  return Astro.redirect("/");
+}
+---
+
+<AdminLayout>
+  <section class="mx-auto max-w-6xl px-4 py-10">
+    <header class="mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-semibold tracking-tight">Manage Programs</h1>
+          <p class="text-muted-foreground mt-1">
+            Add, edit, and manage academic programs and courses.
+          </p>
+        </div>
+        <button
+          id="add-program-btn"
+          class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+        >
+          <span id="add-btn-text">Add Program</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="rounded-lg border bg-card">
+      <div class="p-6">
+        <div id="programs-list" class="space-y-4">
+          <!-- Programs will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add/Edit Program Modal -->
+  <div id="program-modal" class="fixed inset-0 z-50 hidden bg-black/50">
+    <div class="flex min-h-full items-center justify-center p-4">
+      <div class="w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg">
+        <div class="mb-4 flex items-center justify-between">
+          <h2 id="modal-title" class="text-lg font-semibold">Add Program</h2>
+          <button id="close-modal" class="text-gray-400 hover:text-gray-600">
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <form id="program-form" class="space-y-4">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700"
+                >Program Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary"
+              />
+            </div>
+            <div>
+              <label for="level" class="block text-sm font-medium text-gray-700"
+                >Level</label
+              >
+              <select
+                id="level"
+                name="level"
+                required
+                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary"
+              >
+                <option value="Undergraduate">Undergraduate</option>
+                <option value="Postgraduate">Postgraduate</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label
+                for="duration"
+                class="block text-sm font-medium text-gray-700">Duration</label
+              >
+              <input
+                type="text"
+                id="duration"
+                name="duration"
+                required
+                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary"
+              />
+            </div>
+            <div>
+              <label for="seats" class="block text-sm font-medium text-gray-700"
+                >Seats</label
+              >
+              <input
+                type="number"
+                id="seats"
+                name="seats"
+                required
+                min="1"
+                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label
+              for="affiliation"
+              class="block text-sm font-medium text-gray-700">Affiliation</label
+            >
+            <input
+              type="text"
+              id="affiliation"
+              name="affiliation"
+              required
+              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary"
+            />
+          </div>
+
+          <div>
+            <label
+              for="description"
+              class="block text-sm font-medium text-gray-700">Description</label
+            >
+            <textarea
+              id="description"
+              name="description"
+              rows="3"
+              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary"
+            ></textarea>
+          </div>
+
+          <div>
+            <label
+              for="eligibility"
+              class="block text-sm font-medium text-gray-700">Eligibility</label
+            >
+            <textarea
+              id="eligibility"
+              name="eligibility"
+              rows="2"
+              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary"
+            ></textarea>
+          </div>
+
+          <div>
+            <label
+              for="curriculum"
+              class="block text-sm font-medium text-gray-700"
+              >Curriculum (one per line)</label
+            >
+            <textarea
+              id="curriculum"
+              name="curriculum"
+              rows="4"
+              placeholder="Enter curriculum items, one per line"
+              class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary"
+            ></textarea>
+          </div>
+
+          <div class="flex justify-end space-x-3">
+            <button
+              type="button"
+              id="cancel-btn"
+              class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              Save Program
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    let programs = [];
+    let editingProgram = null;
+    let isLoading = false;
+
+    // Load programs
+    async function loadPrograms() {
+      if (isLoading) return;
+
+      isLoading = true;
+      const container = document.getElementById("programs-list");
+      const addBtn = document.getElementById("add-program-btn");
+      const addBtnText = document.getElementById("add-btn-text");
+
+      // Show loading state
+      container.innerHTML =
+        '<div class="flex items-center justify-center py-8"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div><span class="ml-2 text-gray-600">Loading programs...</span></div>';
+      addBtn.disabled = true;
+      addBtnText.textContent = "Loading...";
+
+      try {
+        const response = await fetch("/api/admin/academics/programs");
+        programs = await response.json();
+        renderPrograms();
+      } catch (error) {
+        console.error("Error loading programs:", error);
+        container.innerHTML =
+          '<p class="text-center text-red-500 py-8">Error loading programs. Please try again.</p>';
+      } finally {
+        isLoading = false;
+        addBtn.disabled = false;
+        addBtnText.textContent = "Add Program";
+      }
+    }
+
+    // Render programs
+    function renderPrograms() {
+      const container = document.getElementById("programs-list");
+      if (programs.length === 0) {
+        container.innerHTML =
+          '<p class="text-center text-gray-500 py-8">No programs found. Add your first program!</p>';
+        return;
+      }
+
+      container.innerHTML = programs
+        .map(
+          (program) => `
+        <div class="rounded-lg border bg-white p-4">
+          <div class="flex items-start justify-between">
+            <div class="flex-1">
+              <h3 class="text-lg font-semibold">${program.name}</h3>
+              <div class="mt-2 grid grid-cols-2 gap-4 text-sm text-gray-600">
+                <div><span class="font-medium">Level:</span> ${program.level}</div>
+                <div><span class="font-medium">Duration:</span> ${program.duration}</div>
+                <div><span class="font-medium">Seats:</span> ${program.seats}</div>
+                <div><span class="font-medium">Affiliation:</span> ${program.affiliation}</div>
+              </div>
+              ${program.description ? `<p class="mt-2 text-sm text-gray-600">${program.description}</p>` : ""}
+            </div>
+            <div class="ml-4 flex space-x-2">
+              <button
+                onclick="editProgram('${program.id}')"
+                class="rounded-md bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 hover:bg-blue-100"
+              >
+                Edit
+              </button>
+              <button
+                onclick="deleteProgram('${program.id}')"
+                class="rounded-md bg-red-50 px-3 py-1 text-sm font-medium text-red-700 hover:bg-red-100"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      `
+        )
+        .join("");
+    }
+
+    // Add program
+    function addProgram() {
+      if (isLoading) return;
+
+      editingProgram = null;
+      document.getElementById("modal-title").textContent = "Add Program";
+      document.getElementById("program-form").reset();
+      document.getElementById("program-modal").classList.remove("hidden");
+    }
+
+    // Edit program
+    function editProgram(id) {
+      const program = programs.find((p) => p.id === id);
+      if (!program) return;
+
+      editingProgram = program;
+      document.getElementById("modal-title").textContent = "Edit Program";
+
+      // Fill form
+      document.getElementById("name").value = program.name;
+      document.getElementById("level").value = program.level;
+      document.getElementById("duration").value = program.duration;
+      document.getElementById("seats").value = program.seats;
+      document.getElementById("affiliation").value = program.affiliation;
+      document.getElementById("description").value = program.description || "";
+      document.getElementById("eligibility").value = program.eligibility || "";
+      document.getElementById("curriculum").value = program.curriculum
+        ? program.curriculum.join("\n")
+        : "";
+
+      document.getElementById("program-modal").classList.remove("hidden");
+    }
+
+    // Delete program
+    async function deleteProgram(id) {
+      if (!confirm("Are you sure you want to delete this program?")) return;
+
+      const deleteBtn = event.target;
+      const originalText = deleteBtn.textContent;
+      deleteBtn.disabled = true;
+      deleteBtn.textContent = "Deleting...";
+      deleteBtn.classList.add("opacity-50", "cursor-not-allowed");
+
+      try {
+        const response = await fetch(`/api/admin/academics/programs/${id}`, {
+          method: "DELETE",
+        });
+
+        if (response.ok) {
+          programs = programs.filter((p) => p.id !== id);
+          renderPrograms();
+        } else {
+          const errorData = await response
+            .json()
+            .catch(() => ({ message: "Unknown error" }));
+          alert(
+            `Error deleting program: ${errorData.message || "Please try again"}`
+          );
+        }
+      } catch (error) {
+        console.error("Error deleting program:", error);
+        alert("Error deleting program");
+      } finally {
+        deleteBtn.disabled = false;
+        deleteBtn.textContent = originalText;
+        deleteBtn.classList.remove("opacity-50", "cursor-not-allowed");
+      }
+    }
+
+    // Make functions globally accessible
+    window.editProgram = editProgram;
+    window.deleteProgram = deleteProgram;
+
+    // Save program
+    async function saveProgram(formData) {
+      const saveBtn = document.querySelector(
+        '#program-form button[type="submit"]'
+      );
+      const originalText = saveBtn.textContent;
+
+      // Disable save button and show loading state
+      saveBtn.disabled = true;
+      saveBtn.textContent = editingProgram ? "Updating..." : "Saving...";
+      saveBtn.classList.add("opacity-50", "cursor-not-allowed");
+
+      const programData = {
+        name: formData.get("name"),
+        level: formData.get("level"),
+        duration: formData.get("duration"),
+        seats: parseInt(formData.get("seats")),
+        affiliation: formData.get("affiliation"),
+        description: formData.get("description") || null,
+        eligibility: formData.get("eligibility") || null,
+        curriculum: formData.get("curriculum")
+          ? formData
+              .get("curriculum")
+              .split("\n")
+              .filter((line) => line.trim())
+          : null,
+      };
+
+      try {
+        const url = editingProgram
+          ? `/api/admin/academics/programs/${editingProgram.id}`
+          : "/api/admin/academics/programs";
+
+        const method = editingProgram ? "PUT" : "POST";
+
+        const response = await fetch(url, {
+          method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(programData),
+        });
+
+        if (response.ok) {
+          document.getElementById("program-modal").classList.add("hidden");
+          loadPrograms();
+        } else {
+          const errorData = await response
+            .json()
+            .catch(() => ({ message: "Unknown error" }));
+          alert(
+            `Error saving program: ${errorData.message || "Please try again"}`
+          );
+        }
+      } catch (error) {
+        console.error("Error saving program:", error);
+        alert("Error saving program");
+      } finally {
+        // Re-enable save button
+        saveBtn.disabled = false;
+        saveBtn.textContent = originalText;
+        saveBtn.classList.remove("opacity-50", "cursor-not-allowed");
+      }
+    }
+
+    // Event listeners
+    document
+      .getElementById("add-program-btn")
+      .addEventListener("click", addProgram);
+    document.getElementById("close-modal").addEventListener("click", () => {
+      document.getElementById("program-modal").classList.add("hidden");
+    });
+    document.getElementById("cancel-btn").addEventListener("click", () => {
+      document.getElementById("program-modal").classList.add("hidden");
+    });
+    document.getElementById("program-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      saveProgram(new FormData(e.target));
+    });
+
+    // Close modal on background click
+    document.getElementById("program-modal").addEventListener("click", (e) => {
+      if (e.target.id === "program-modal") {
+        document.getElementById("program-modal").classList.add("hidden");
+      }
+    });
+
+    // Load programs on page load
+    loadPrograms();
+  </script>
+</AdminLayout>

@@ -1,0 +1,48 @@
+---
+const quickLinks = [
+  {
+    title: "Admissions",
+    desc: "Apply for various programs",
+    section: "admissions",
+  },
+  {
+    title: "Academics",
+    desc: "Course details & curriculum",
+    section: "academics",
+  },
+  {
+    title: "Student Life",
+    desc: "Campus activities & facilities",
+    section: "student-life",
+  },
+  {
+    title: "Research",
+    desc: "Research opportunities",
+    section: "research",
+  },
+];
+---
+
+<div class="bg-gray-50 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+      Quick Access
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {
+        quickLinks.map((item, index) => (
+          <a
+            href={`/${item.section}`}
+            class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer border-l-4 border-blue-600"
+          >
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+              {item.title}
+            </h3>
+            <p class="text-gray-600 mb-4">{item.desc}</p>
+            <div class="text-blue-600 font-medium">Learn More →</div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>

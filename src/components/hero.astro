@@ -1,10 +1,23 @@
-<div class="">
-  <img
-    src="/assets/images/college.jpg"
-    alt=""
-    class="w-full aspect-video object-cover max-h-[calc(100vh-200px)] object-bottom"
-  />
-  <div class="w-full flex">
-    <h1 class="bg-primary px-4 py-2 text-white">Announcement</h1>
-  </div>
+---
+import AnnouncementBar from "./AnnouncementBar.astro";
+import ContactSection from "./ContactSection.astro";
+import EventsSection from "./EventsSection";
+import FacilitiesSection from "./FacilitiesSection";
+import HeroSection from "./HeroSection.astro";
+import PrincipalSection from "./PrincipalSection.astro";
+import QuickLinksSection from "./QuickLinksSection.astro";
+import StudentPlacementsCarousel from "./StudentPlacementsCarousel";
+import WelcomeSection from "./WelcomeSection.astro";
+---
+
+<div class="relative">
+  <HeroSection />
+  <AnnouncementBar />
+  <WelcomeSection />
+  <PrincipalSection />
+  <FacilitiesSection />
+  <StudentPlacementsCarousel client:load />
+  <EventsSection client:load />
+  <QuickLinksSection />
+  <ContactSection />
 </div>

@@ -20,7 +20,6 @@ const url = Astro.url.pathname;
   </head>
   <body>
     <div class="min-h-screen bg-gray-50 font-inter">
-      <Header activeSection={url.slice(1, url.length)} client:load />
       <main><slot /></main>
       <Footer />
     </div>

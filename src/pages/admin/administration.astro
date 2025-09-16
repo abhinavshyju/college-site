@@ -1,0 +1,369 @@
+---
+import AdminLayout from "@/layouts/AdminLayout.astro";
+if (!Astro.locals.session) {
+  return Astro.redirect("/");
+}
+---
+
+<AdminLayout>
+  <section class="mx-auto max-w-5xl px-4 py-10 min-h-screen">
+    <header class="mb-6 flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-semibold tracking-tight">
+          Manage Administration
+        </h1>
+        <p class="text-muted-foreground mt-1">
+          Add and edit principal, HODs and faculty.
+        </p>
+      </div>
+      <a
+        href="#"
+        id="openForm"
+        class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+        >Add Staff</a
+      >
+    </header>
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" id="staffGrid">
+      <div
+        id="loadingIndicator"
+        class="col-span-full grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        <div class="rounded-xl border p-4 shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="h-14 w-14 rounded-lg bg-muted animate-pulse"></div>
+            <div class="flex-1 space-y-2">
+              <div class="h-3 w-28 rounded bg-muted animate-pulse"></div>
+              <div class="h-3 w-20 rounded bg-muted animate-pulse"></div>
+            </div>
+          </div>
+          <div class="mt-3 h-3 w-5/6 rounded bg-muted animate-pulse"></div>
+          <div class="mt-1 h-3 w-2/5 rounded bg-muted animate-pulse"></div>
+          <div class="mt-4 flex gap-2">
+            <div class="h-8 w-16 rounded-md bg-muted animate-pulse"></div>
+            <div class="h-8 w-20 rounded-md bg-muted animate-pulse"></div>
+          </div>
+        </div>
+        <div class="rounded-xl border p-4 shadow-sm hidden sm:block">
+          <div class="flex items-center gap-3">
+            <div class="h-14 w-14 rounded-lg bg-muted animate-pulse"></div>
+            <div class="flex-1 space-y-2">
+              <div class="h-3 w-28 rounded bg-muted animate-pulse"></div>
+              <div class="h-3 w-20 rounded bg-muted animate-pulse"></div>
+            </div>
+          </div>
+          <div class="mt-3 h-3 w-5/6 rounded bg-muted animate-pulse"></div>
+          <div class="mt-1 h-3 w-2/5 rounded bg-muted animate-pulse"></div>
+          <div class="mt-4 flex gap-2">
+            <div class="h-8 w-16 rounded-md bg-muted animate-pulse"></div>
+            <div class="h-8 w-20 rounded-md bg-muted animate-pulse"></div>
+          </div>
+        </div>
+        <div class="rounded-xl border p-4 shadow-sm hidden lg:block">
+          <div class="flex items-center gap-3">
+            <div class="h-14 w-14 rounded-lg bg-muted animate-pulse"></div>
+            <div class="flex-1 space-y-2">
+              <div class="h-3 w-28 rounded bg-muted animate-pulse"></div>
+              <div class="h-3 w-20 rounded bg-muted animate-pulse"></div>
+            </div>
+          </div>
+          <div class="mt-3 h-3 w-5/6 rounded bg-muted animate-pulse"></div>
+          <div class="mt-1 h-3 w-2/5 rounded bg-muted animate-pulse"></div>
+          <div class="mt-4 flex gap-2">
+            <div class="h-8 w-16 rounded-md bg-muted animate-pulse"></div>
+            <div class="h-8 w-20 rounded-md bg-muted animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+      <div id="emptyState" class="col-span-full hidden text-center py-14">
+        <div class="mx-auto mb-3 h-10 w-10 rounded-full bg-muted"></div>
+        <h3 class="text-lg font-medium">No staff yet</h3>
+        <p class="text-muted-foreground mt-1">
+          Add your first staff member to get started.
+        </p>
+        <button
+          id="emptyAddBtn"
+          class="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+          >Add Staff</button
+        >
+      </div>
+    </div>
+  </section>
+  <div class="flex justify-center items-center h-screen w-full">
+    <dialog
+      id="staffDialog"
+      class="rounded-xl border bg-card p-0 shadow-lg fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+    >
+      <form id="staffForm" class="w-[min(92vw,520px)] p-6">
+        <h2 class="mb-4 text-lg font-semibold">Staff Details</h2>
+        <div class="grid gap-3">
+          <label class="grid gap-1">
+            <span class="text-sm">Name</span>
+            <input name="name" class="rounded-md border px-3 py-2" required />
+          </label>
+          <label class="grid gap-1">
+            <span class="text-sm">Position</span>
+            <input
+              name="position"
+              class="rounded-md border px-3 py-2"
+              required
+            />
+          </label>
+          <label class="grid gap-1">
+            <span class="text-sm">Qualification</span>
+            <input name="qualification" class="rounded-md border px-3 py-2" />
+          </label>
+          <label class="grid gap-1">
+            <span class="text-sm">Experience</span>
+            <input name="experience" class="rounded-md border px-3 py-2" />
+          </label>
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <label class="grid gap-1">
+              <span class="text-sm">Email</span>
+              <input
+                name="email"
+                type="email"
+                class="rounded-md border px-3 py-2"
+              />
+            </label>
+            <label class="grid gap-1">
+              <span class="text-sm">Phone</span>
+              <input name="phone" class="rounded-md border px-3 py-2" />
+            </label>
+          </div>
+          <label class="grid gap-1">
+            <span class="text-sm">Image URL</span>
+            <input name="image" class="rounded-md border px-3 py-2" />
+          </label>
+          <label class="grid gap-1">
+            <span class="text-sm">Category</span>
+            <select
+              name="category"
+              class="rounded-md border px-3 py-2"
+              required
+            >
+              <option value="principal">Principal</option>
+              <option value="hod">HOD</option>
+              <option value="faculty">Faculty</option>
+            </select>
+          </label>
+          <label class="grid gap-1">
+            <span class="text-sm">Achievements (comma separated)</span>
+            <input
+              name="achievements"
+              class="rounded-md border px-3 py-2"
+              placeholder="Published 10 papers, Award X"
+            />
+          </label>
+        </div>
+        <div class="mt-5 flex items-center justify-end gap-3">
+          <button
+            type="button"
+            id="cancelBtn"
+            class="rounded-md border px-4 py-2 text-sm">Cancel</button
+          >
+          <button
+            type="submit"
+            id="saveBtn"
+            class="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white"
+            >Save</button
+          >
+        </div>
+        <input type="hidden" name="id" />
+      </form>
+    </dialog>
+  </div>
+
+  <style>
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.4);
+    }
+  </style>
+
+  <script type="module">
+    const grid = document.getElementById("staffGrid");
+    const loadingIndicator = document.getElementById("loadingIndicator");
+    const emptyState = document.getElementById("emptyState");
+    const emptyAddBtn = document.getElementById("emptyAddBtn");
+    const dialog = document.getElementById("staffDialog");
+    const form = document.getElementById("staffForm");
+    const openForm = document.getElementById("openForm");
+    const cancelBtn = document.getElementById("cancelBtn");
+    const saveBtn = document.getElementById("saveBtn");
+
+    async function loadStaff() {
+      if (!grid) return;
+
+      if (loadingIndicator) loadingIndicator.style.display = "grid";
+      if (emptyState) emptyState.classList.add("hidden");
+      grid.querySelectorAll("[data-staff-card]").forEach((n) => n.remove());
+      if (loadingIndicator && !loadingIndicator.parentElement)
+        grid.appendChild(loadingIndicator);
+
+      try {
+        const res = await fetch("/api/admin/administration");
+        const data = await res.json();
+        const list = Array.isArray(data) ? data : [];
+
+        if (list.length === 0) {
+          if (emptyState) emptyState.classList.remove("hidden");
+        }
+
+        list.forEach((s) => {
+          const card = document.createElement("div");
+          card.setAttribute("data-staff-card", "");
+          card.className =
+            "rounded-xl border bg-card p-4 shadow-sm transition hover:shadow-md hover:border-primary/30";
+          card.innerHTML = `
+            <div class="flex items-center gap-3">
+              <img src="${s.image || "/assets/images/princi.jpg"}" alt="${s.name}" class="h-14 w-14 rounded-lg object-cover" />
+              <div>
+                <div class="font-medium">${s.name}</div>
+                <div class="text-muted-foreground text-sm">${s.position} • ${s.category}</div>
+              </div>
+            </div>
+            <div class="mt-3 text-sm">${s.qualification || ""}</div>
+            <div class="mt-1 text-muted-foreground text-xs">${s.email || ""} ${s.phone ? "• " + s.phone : ""}</div>
+            <div class="mt-4 flex gap-2">
+              <button data-edit="${s.id}" class="rounded-md border px-3 py-1.5 text-sm">Edit</button>
+              <button data-delete="${s.id}" class="rounded-md bg-destructive px-3 py-1.5 text-sm text-white">Delete</button>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (err) {
+        console.error("Failed to load staff:", err);
+        grid.innerHTML =
+          "<div class='col-span-full text-center text-red-500'>Failed to load staff data.</div>";
+      } finally {
+        if (loadingIndicator) loadingIndicator.style.display = "none";
+      }
+    }
+
+    if (openForm && form && dialog) {
+      openForm.addEventListener("click", (e) => {
+        e.preventDefault();
+        form.reset();
+        form.querySelector('input[name="id"]').value = "";
+        dialog.showModal();
+        const firstInput = form.querySelector('input[name="name"]');
+        if (firstInput) firstInput.focus();
+      });
+    }
+
+    if (cancelBtn && dialog) {
+      cancelBtn.addEventListener("click", () => dialog.close());
+    }
+
+    if (emptyAddBtn && openForm) {
+      emptyAddBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        openForm.click();
+      });
+    }
+
+    if (grid && form && dialog) {
+      grid.addEventListener("click", async (e) => {
+        const t = e.target instanceof Element ? e.target : null;
+        if (!t) return;
+
+        if (t.matches("[data-edit]")) {
+          const id = t.getAttribute("data-edit");
+          if (!id) return;
+          const res = await fetch(`/api/admin/administration/${id}`);
+          const s = await res.json();
+          const entries = Object.entries(s);
+
+          for (const [k, v] of entries) {
+            const el = form.querySelector(`[name="${k}"]`);
+            if (k === "achievements" && Array.isArray(v)) {
+              if (el instanceof HTMLInputElement) el.value = v.join(", ");
+            } else if (
+              el instanceof HTMLInputElement ||
+              el instanceof HTMLSelectElement
+            ) {
+              el.value = String(v ?? "");
+            }
+          }
+
+          dialog.showModal();
+          const firstInput = form.querySelector('input[name="name"]');
+          if (firstInput) firstInput.focus();
+        }
+
+        if (t.matches("[data-delete]")) {
+          const id = t.getAttribute("data-delete");
+          if (!id) return;
+          if (confirm("Delete this staff entry?")) {
+            await fetch(`/api/admin/administration/${id}`, {
+              method: "DELETE",
+            });
+            loadStaff();
+          }
+        }
+      });
+    }
+
+    if (form && dialog && saveBtn) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        saveBtn.disabled = true;
+        saveBtn.textContent = "Saving...";
+
+        const fd = new FormData(form);
+        const raw = Object.fromEntries(fd.entries());
+        const achievementsStr = raw.achievements
+          ? String(raw.achievements)
+          : "";
+        const idStr = raw.id ? String(raw.id) : "";
+        const bodyPayload = {
+          id: idStr || undefined,
+          name: String(raw.name || ""),
+          position: String(raw.position || ""),
+          qualification: raw.qualification
+            ? String(raw.qualification)
+            : undefined,
+          experience: raw.experience ? String(raw.experience) : undefined,
+          email: raw.email ? String(raw.email) : undefined,
+          phone: raw.phone ? String(raw.phone) : undefined,
+          image: raw.image ? String(raw.image) : undefined,
+          category: String(raw.category || "faculty"),
+          achievements: achievementsStr
+            ? achievementsStr
+                .split(",")
+                .map((x) => x.trim())
+                .filter(Boolean)
+            : [],
+        };
+        const method = idStr ? "PUT" : "POST";
+        const url = idStr
+          ? `/api/admin/administration/${idStr}`
+          : "/api/admin/administration";
+
+        try {
+          await fetch(url, {
+            method,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(bodyPayload),
+          });
+          dialog.close();
+          loadStaff();
+        } catch (err) {
+          console.error("Failed to save staff:", err);
+          alert("Failed to save staff.");
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.textContent = "Save";
+        }
+      });
+    }
+
+    if (dialog) {
+      dialog.addEventListener("click", (e) => {
+        if (e.target === dialog) dialog.close();
+      });
+    }
+
+    loadStaff();
+  </script>
+</AdminLayout>

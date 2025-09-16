@@ -1,32 +1,109 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import { isAdmin } from "@/middlewares/auth";
-
-if (!(await isAdmin(Astro))) {
-  return Astro.redirect("/login");
+import AdminLayout from "@/layouts/AdminLayout.astro";
+if (!Astro.locals.session) {
+  return Astro.redirect("/");
 }
 ---
 
-<Layout>
-  <div class="container mx-auto px-4 py-8 max-w-7xl">
-    <h1 class="text-3xl font-bold mb-8">Admin Dashboard</h1>
+<AdminLayout>
+  <section class="mx-auto max-w-6xl px-4 py-10">
+    <header class="mb-8">
+      <h1 class="text-2xl font-semibold tracking-tight">Admin Dashboard</h1>
+      <p class="text-muted-foreground mt-1">
+        Quick actions to manage your site content.
+      </p>
+    </header>
 
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <a
-        href="/admin/placement"
-        class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+        href="/admin/administration"
+        class="group rounded-xl border bg-card p-6 shadow-sm transition hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        <h2 class="text-2xl font-semibold mb-2">Placement Management</h2>
-        <p class="text-gray-600">Manage student placement records and images</p>
+        <div
+          class="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary"
+        >
+          <span aria-hidden="true">🏢</span>
+        </div>
+        <h2 class="font-medium">Manage Administration</h2>
+        <p class="text-muted-foreground mt-1 text-sm">
+          Staff, committees, roles and responsibilities.
+        </p>
       </a>
 
       <a
-        href="/admin/events"
-        class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+        href="/admin/academics"
+        class="group rounded-xl border bg-card p-6 shadow-sm transition hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        <h2 class="text-2xl font-semibold mb-2">Event Management</h2>
-        <p class="text-gray-600">Manage college events and activities</p>
+        <div
+          class="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary"
+        >
+          <span aria-hidden="true">📚</span>
+        </div>
+        <h2 class="font-medium">Manage Academics</h2>
+        <p class="text-muted-foreground mt-1 text-sm">
+          Courses, departments, curriculum and schedules.
+        </p>
+      </a>
+
+      <a
+        href="/admin/admissions"
+        class="group rounded-xl border bg-card p-6 shadow-sm transition hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <div
+          class="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary"
+        >
+          <span aria-hidden="true">🧾</span>
+        </div>
+        <h2 class="font-medium">Admissions & Fees</h2>
+        <p class="text-muted-foreground mt-1 text-sm">
+          Application info, fee structure and deadlines.
+        </p>
+      </a>
+
+      <a
+        href="/admin/gallery"
+        class="group rounded-xl border bg-card p-6 shadow-sm transition hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <div
+          class="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary"
+        >
+          <span aria-hidden="true">🖼️</span>
+        </div>
+        <h2 class="font-medium">Manage Gallery</h2>
+        <p class="text-muted-foreground mt-1 text-sm">
+          Photos, albums and event highlights.
+        </p>
+      </a>
+
+      <a
+        href="/admin/announcements"
+        class="group rounded-xl border bg-card p-6 shadow-sm transition hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <div
+          class="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary"
+        >
+          <span aria-hidden="true">📢</span>
+        </div>
+        <h2 class="font-medium">Announcements</h2>
+        <p class="text-muted-foreground mt-1 text-sm">
+          Create and schedule notices and updates.
+        </p>
+      </a>
+
+      <a
+        href="/admin/users"
+        class="group rounded-xl border bg-card p-6 shadow-sm transition hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <div
+          class="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary"
+        >
+          <span aria-hidden="true">👤</span>
+        </div>
+        <h2 class="font-medium">User Access</h2>
+        <p class="text-muted-foreground mt-1 text-sm">
+          Roles, permissions and admin logins.
+        </p>
       </a>
     </div>
-  </div>
-</Layout>
+  </section>
+</AdminLayout>
