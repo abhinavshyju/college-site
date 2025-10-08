@@ -3,14 +3,6 @@ import { defineMiddleware } from "astro:middleware";
 import { Auth } from "./lib/auth";
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  // Change this as user need
-  const skipRoute = ["/admin", "/admin/admin-login-user-access"];
-  const pathName = context.url.pathname;
-
-  if (!skipRoute.includes(pathName)) {
-    return next();
-  }
-
   // Use the correct type for db to satisfy TypeScript
   // @ts-expect-error: Suppress type error due to schema mismatch
   context.locals.db = db(context);

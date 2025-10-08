@@ -1,7 +1,6 @@
 import type { APIRoute } from "astro";
 import { db as getDb } from "@/db";
 import { departmentsTable } from "@/db/schema/academics";
-import { Auth } from "@/lib/auth";
 
 export const GET: APIRoute = async (ctx) => {
   const db = ctx.locals.db;
