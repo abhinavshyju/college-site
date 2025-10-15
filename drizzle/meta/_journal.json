@@ -29,6 +29,13 @@
       "when": 1757995861690,
       "tag": "0003_high_microchip",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1760554924512,
+      "tag": "0004_silky_gladiator",
+      "breakpoints": true
     }
   ]
 }

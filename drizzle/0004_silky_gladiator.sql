@@ -1,0 +1,2 @@
+ALTER TABLE "staff" ADD COLUMN "department_id" text;--> statement-breakpoint
+ALTER TABLE "staff" ADD CONSTRAINT "staff_department_id_departments_id_fk" FOREIGN KEY ("department_id") REFERENCES "public"."departments"("id") ON DELETE no action ON UPDATE no action;
