@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Mail, Phone, User, Award, GraduationCap } from "lucide-react";
 
-// This new type will hold faculty grouped by their department name
 type GroupedFaculty = {
   [departmentName: string]: StaffItem[];
 };
@@ -33,11 +32,11 @@ const AdministrationSection: React.FC = () => {
   const [staffData, setStaffData] = useState<{
     principal: StaffItem[];
     hods: StaffItem[];
-    faculty: GroupedFaculty; // Use the new GroupedFaculty type
+    faculty: GroupedFaculty; 
   }>({
     principal: [],
     hods: [],
-    faculty: {}, // Initialize as an empty object
+    faculty: {}, 
   });
 
   const [loading, setLoading] = useState(true);

@@ -10,16 +10,12 @@ export const GET: APIRoute = async (ctx) => {
 
   const rows = await db
     .select({
-      // Select the entire staffTable object
       staff: staffTable, 
-      // And the specific departmentName
       departmentName: departmentsTable.name,
     })
     .from(staffTable)
     .leftJoin(departmentsTable, eq(staffTable.departmentId, departmentsTable.id));
 
-  // The result will be an array like [{ staff: { ... }, departmentName: "..." }]
-  // We can simplify this for the frontend with a map
   const result = rows.map(row => ({
     ...row.staff,
     departmentName: row.departmentName

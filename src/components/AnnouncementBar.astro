@@ -4,7 +4,6 @@ const announcements = [
   { text: "Fifth semester examinations begin on October 30 — check the timetable in the student portal.", highlight: "October 30" },
 ];
 
-// This function now returns an HTML string instead of JSX
 const renderText = (text: string, highlight?: string) => {
   if (!highlight || !text.toLowerCase().includes(highlight.toLowerCase())) {
     return text;
@@ -64,9 +63,7 @@ const renderText = (text: string, highlight?: string) => {
     align-items: center;
     gap: 8px;
     font-size: 0.9rem;
-    /* The two lines below have been removed */
-    /* border-top-right-radius: 8px; */
-    /* border-bottom-right-radius: 8px; */
+    
   }
 
   .announcement-bar {
