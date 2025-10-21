@@ -1,4 +1,5 @@
 import { pgTable, text, timestamp, jsonb, varchar } from "drizzle-orm/pg-core";
+import { departmentsTable } from "./academics.ts";
 
 export const staffTable = pgTable("staff", {
   id: text("id").primaryKey(),
@@ -9,6 +10,7 @@ export const staffTable = pgTable("staff", {
   email: text("email"),
   phone: text("phone"),
   image: text("image"),
+  departmentId: text("department_id").references(() => departmentsTable.id),
   category: varchar("category", { length: 32 }).notNull(), // principal | hod | faculty
   achievements: jsonb("achievements").$type<string[] | null>().default(null),
   createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
