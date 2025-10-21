@@ -64,7 +64,7 @@ export const authActions = {
 
         throw new ActionError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "An internal error occurred during signup",
+          message: `An internal error occurred during signup : ${error}`,
         });
       }
     },
@@ -126,7 +126,7 @@ export const authActions = {
 
         throw new ActionError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "An internal error occurred during login",
+          message: `An internal error occurred during login : ${error}`,
         });
       }
     },
