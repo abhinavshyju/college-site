@@ -1,3 +1,142 @@
-<div class="w-full flex">
-  <h1 class="bg-blue-600 px-4 py-2 text-white">Announcement</h1>
+---
+const announcements = [
+  { text: "Welcome to the new Announcement Bar! We're excited for a year of learning and growth.", highlight: "Welcome" },
+  { text: "Fifth semester examinations begin on October 30 — check the timetable in the student portal.", highlight: "October 30" },
+];
+
+const renderText = (text: string, highlight?: string) => {
+  if (!highlight || !text.toLowerCase().includes(highlight.toLowerCase())) {
+    return text;
+  }
+  const regex = new RegExp(`(${highlight})`, 'gi');
+  return text.replace(regex, `<strong class="highlight">$1</strong>`);
+};
+---
+
+<div class="announcement-wrapper">
+  <div class="announcement-label">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+      <path d="M10 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9.5L14.5 3z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="12" x2="12" y1="18" y2="12" />
+      <line x1="9" x2="15" y1="15" y2="15" />
+    </svg>
+    <span>Announcements</span>
+  </div>
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      {announcements.map((announcement) => (
+        <span set:html={renderText(announcement.text, announcement.highlight)} />
+      ))}
+      {announcements.map((announcement) => (
+        <span set:html={renderText(announcement.text, announcement.highlight)} />
+      ))}
+    </div>
+  </div>
 </div>
+
+<style>
+  :root {
+    --bar-bg-color: #ffffff;
+    --bar-text-color: #ee0707;
+    --label-bg-color: #3b82f6;
+    --label-text-color: #ffffff;
+    --highlight-bg-color: #e0f2fe;
+    --highlight-text-color: #0284c7;
+    --fade-width: 50px;
+  }
+
+  .announcement-wrapper {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .announcement-label {
+    background-color: var(--label-bg-color);
+    color: var(--label-text-color);
+    padding: 12px 20px;
+    font-weight: 600;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    
+  }
+
+  .announcement-bar {
+    flex-grow: 1;
+    background: var(--bar-bg-color);
+    color: var(--bar-text-color);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .announcement-bar::before,
+  .announcement-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--fade-width);
+    z-index: 2;
+  }
+
+  .announcement-bar::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bar-bg-color) 0%, transparent 100%);
+  }
+
+  .announcement-bar::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bar-bg-color) 0%, transparent 100%);
+  }
+
+  .announcement-content {
+    display: inline-block;
+    animation: marquee 45s linear infinite;
+    white-space: nowrap;
+  }
+
+  .announcement-content span {
+    padding: 0 2.5rem;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .announcement-content span::before {
+    content: '•';
+    color: var(--label-bg-color);
+    margin-right: 2.5rem;
+    font-size: 1.5em;
+    line-height: 1;
+  }
+
+  .announcement-content span:first-child::before {
+    content: '';
+    margin-right: 0;
+  }
+
+  :global(.highlight) {
+    background-color: var(--highlight-bg-color);
+    color: var(--highlight-text-color);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    margin: 0 4px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .announcement-bar:hover .announcement-content {
+    animation-play-state: paused;
+  }
+</style>

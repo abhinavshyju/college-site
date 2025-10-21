@@ -1,13 +1,27 @@
 import type { APIRoute } from "astro";
+import { eq } from "drizzle-orm";
 import { db as getDb } from "@/db";
 import { staffTable } from "@/db/schema/administration";
+import { departmentsTable } from "@/db/schema/academics";
 import { Auth } from "@/lib/auth";
 
 export const GET: APIRoute = async (ctx) => {
   const db = ctx.locals.db;
 
-  const rows = await db.select().from(staffTable);
-  return new Response(JSON.stringify(rows), {
+  const rows = await db
+    .select({
+      staff: staffTable, 
+      departmentName: departmentsTable.name,
+    })
+    .from(staffTable)
+    .leftJoin(departmentsTable, eq(staffTable.departmentId, departmentsTable.id));
+
+  const result = rows.map(row => ({
+    ...row.staff,
+    departmentName: row.departmentName
+  }));
+
+  return new Response(JSON.stringify(result), {
     headers: { "Content-Type": "application/json" },
   });
 };
