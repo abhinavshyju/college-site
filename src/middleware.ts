@@ -3,9 +3,7 @@ import { defineMiddleware } from "astro:middleware";
 import { Auth } from "./lib/auth";
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  // Use the correct type for db to satisfy TypeScript
-  // @ts-expect-error: Suppress type error due to schema mismatch
-  context.locals.db = db(context);
+  context.locals.db = db();
 
   context.locals.auth = Auth.getInstance(context.locals.db);
   const auth = context.locals.auth;
