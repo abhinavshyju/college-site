@@ -1,0 +1,1 @@
+ALTER TABLE "staff" ADD COLUMN "display_order" integer DEFAULT 99 NOT NULL;

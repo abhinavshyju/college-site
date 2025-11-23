@@ -57,7 +57,7 @@ const AboutSection: React.FC = () => {
               </div>
               <div>
                 <img
-                  src="https://images.pexels.com/photos/207692/pexels-photo-207692.jpeg"
+                  src="https://grvnijrdyyevvtlcssoo.supabase.co/storage/v1/object/public/gallery-images/college.jpg"
                   alt="College Campus"
                   className="rounded-lg shadow-lg w-full h-64 object-cover"
                 />

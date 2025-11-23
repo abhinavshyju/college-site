@@ -4,12 +4,12 @@ import { Calendar, Users } from "lucide-react";
 const EventsSection: React.FC = () => {
   const events = [
     {
-      title: "National Conference on Applied Sciences (NCAS 2024)",
+      title: "National Service Scheme (NSS) Annual Camp 2024",
       date: "March 15-17, 2024",
       description:
         "Three-day national conference featuring research presentations, keynote speeches, and networking sessions.",
       image:
-        "https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg",
+        "https://grvnijrdyyevvtlcssoo.supabase.co/storage/v1/object/public/Events/WhatsApp%20Image%202025-10-11%20at%2021.52.13_3c6c115f.jpg",
       participants: "200+ Participants",
       type: "Conference",
     },

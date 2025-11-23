@@ -42,3 +42,37 @@ export const departmentsTable = pgTable("departments", {
     .defaultNow()
     .notNull(),
 });
+
+export const attendanceTable = pgTable("attendance", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description"),
+  link: text("link"), // Can store the PDF URL
+  level: text("level").notNull(), // "UG" or "PG"
+  program: text("program").notNull(), // e.g., "BSc CS"
+  semester: text("semester").notNull(), // e.g., "Semester 1"
+  date: timestamp("date", { withTimezone: true, mode: "date" }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" })
+    .defaultNow()
+    .notNull(),
+});
+
+export const internalMarksTable = pgTable("internal_marks", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description"),
+  link: text("link"), // Can store the PDF URL
+  level: text("level").notNull(), // "UG" or "PG"
+  program: text("program").notNull(), // e.g., "BSc CS"
+  semester: text("semester").notNull(), // e.g., "Semester 1"
+  date: timestamp("date", { withTimezone: true, mode: "date" }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" })
+    .defaultNow()
+    .notNull(),
+});
