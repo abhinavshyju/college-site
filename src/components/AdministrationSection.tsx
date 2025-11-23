@@ -26,17 +26,20 @@ const AdministrationSection: React.FC = () => {
   const categories = [
     { id: "principal", label: "Principal" },
     { id: "hods", label: "Heads of Departments" },
-    { id: "faculty", label: "Faculty Members" },
+    { id: "faculty", label: "Teaching faculty" },
+    { id: "non-teaching", label: "Non-Teaching Faculty" },
   ];
 
   const [staffData, setStaffData] = useState<{
     principal: StaffItem[];
     hods: StaffItem[];
-    faculty: GroupedFaculty; 
+    faculty: GroupedFaculty;
+    nonTeaching: StaffItem[];
   }>({
     principal: [],
     hods: [],
-    faculty: {}, 
+    faculty: {},
+    nonTeaching: [],
   });
 
   const [loading, setLoading] = useState(true);
@@ -62,6 +65,7 @@ const AdministrationSection: React.FC = () => {
           principal: [] as StaffItem[],
           hods: [] as StaffItem[],
           faculty: {} as GroupedFaculty,
+          nonTeaching: [] as StaffItem[],
         };
 
         // Sort the fetched rows into the correct categories
@@ -75,11 +79,14 @@ const AdministrationSection: React.FC = () => {
               nextData.hods.push(row);
               break;
             case "faculty":
-              const deptName = row.departmentName || "Other Departments";
+              const deptName = row.departmentName || "Others";
               if (!nextData.faculty[deptName]) {
                 nextData.faculty[deptName] = [];
               }
               nextData.faculty[deptName].push(row);
+              break;
+            case "non-teaching":
+              nextData.nonTeaching.push(row);
               break;
           }
         }
@@ -184,7 +191,13 @@ const AdministrationSection: React.FC = () => {
     switch (selectedCategory) {
       case "principal":
       case "hods":
-        const data = selectedCategory === 'principal' ? staffData.principal : staffData.hods;
+      case "non-teaching":
+        const data =
+          selectedCategory === "principal"
+            ? staffData.principal
+            : selectedCategory === "hods"
+              ? staffData.hods
+              : staffData.nonTeaching;
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.map((person, index) => (
@@ -232,11 +245,10 @@ const AdministrationSection: React.FC = () => {
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className={`mr-8 py-4 px-1 border-b-2 font-medium text-sm ${
-                      selectedCategory === category.id
+                    className={`mr-8 py-4 px-1 border-b-2 font-medium text-sm ${selectedCategory === category.id
                         ? "border-blue-500 text-blue-600"
                         : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                    }`}
+                      }`}
                   >
                     {category.label}
                   </button>

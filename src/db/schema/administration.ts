@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, jsonb, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, jsonb, varchar, integer } from "drizzle-orm/pg-core";
 import { departmentsTable } from "./academics.ts";
 
 export const staffTable = pgTable("staff", {
@@ -11,6 +11,7 @@ export const staffTable = pgTable("staff", {
   phone: text("phone"),
   image: text("image"),
   departmentId: text("department_id").references(() => departmentsTable.id),
+  displayOrder: integer("display_order").default(99).notNull(),
   category: varchar("category", { length: 32 }).notNull(), // principal | hod | faculty
   achievements: jsonb("achievements").$type<string[] | null>().default(null),
   createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
@@ -20,3 +21,5 @@ export const staffTable = pgTable("staff", {
     .defaultNow()
     .notNull(),
 });
+
+

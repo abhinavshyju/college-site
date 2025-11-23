@@ -22,7 +22,8 @@ const GallerySection: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const categories = [
-    { id: "all", label: "All Photos" },
+    { id: "all", label: "All" },
+    { id: "nss", label: "NSS" },
     { id: "campus", label: "Campus Life" },
     { id: "events", label: "Events" },
     { id: "academics", label: "Academics" },
@@ -164,11 +165,10 @@ const GallerySection: React.FC = () => {
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    selectedCategory === category.id
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category.id
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}
                 >
                   {category.label}
                 </button>
@@ -190,7 +190,7 @@ const GallerySection: React.FC = () => {
                     alt={image.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-300 flex items-end">
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300 flex items-end">
                     <div className="p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <h3 className="font-semibold text-sm">{image.title}</h3>
                       <p className="text-xs text-gray-200 mt-1">
@@ -216,7 +216,7 @@ const GallerySection: React.FC = () => {
 
       {/* Lightbox Modal */}
       {selectedImage && selectedImageData && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
           <div className="relative max-w-4xl max-h-full">
             {/* Close Button */}
             <button

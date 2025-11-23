@@ -17,7 +17,6 @@ if (!Astro.locals.session) {
       </button>
     </div>
 
-    <!-- Image Upload Modal -->
     <div
       id="uploadModal"
       class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4"
@@ -89,7 +88,7 @@ if (!Astro.locals.session) {
               <option value="sports">Sports</option>
               <option value="cultural">Cultural</option>
               <option value="graduation">Graduation</option>
-            </select>
+              <option value="nss">NSS</option> </select>
           </div>
 
           <div>
@@ -127,19 +126,12 @@ if (!Astro.locals.session) {
       </div>
     </div>
 
-    <!-- Gallery Images Grid -->
     <div class="bg-white rounded-lg shadow">
       <div class="p-6">
         <div class="mb-4">
           <div class="flex flex-wrap gap-2">
             <button
               class="category-filter px-3 py-1 rounded-full text-sm font-medium bg-blue-600 text-white"
-              data-category="all"
-            >
-              All Images
-            </button>
-            <button
-              class="category-filter px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200"
               data-category="campus"
             >
               Campus Life
@@ -174,6 +166,12 @@ if (!Astro.locals.session) {
             >
               Graduation
             </button>
+            <button
+              class="category-filter px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200"
+              data-category="nss"
+            >
+              NSS
+            </button>
           </div>
         </div>
 
@@ -181,8 +179,7 @@ if (!Astro.locals.session) {
           id="galleryGrid"
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
         >
-          <!-- Images will be loaded here -->
-        </div>
+          </div>
 
         <div id="loadingSpinner" class="text-center py-8">
           <div
@@ -216,7 +213,7 @@ if (!Astro.locals.session) {
   </div>
 
   <script>
-    let currentCategory = "all";
+    let currentCategory = "events"; // CHANGED default category
     let images: any[] = [];
 
     // DOM elements
@@ -272,7 +269,7 @@ if (!Astro.locals.session) {
         btn.className =
           "category-filter px-3 py-1 rounded-full text-sm font-medium bg-blue-600 text-white";
 
-        currentCategory = (btn as HTMLElement).dataset.category || "all";
+        currentCategory = (btn as HTMLElement).dataset.category || "campus";
         renderImages();
       });
     });
@@ -332,10 +329,10 @@ if (!Astro.locals.session) {
 
     // Render images
     function renderImages() {
-      const filteredImages =
-        currentCategory === "all"
-          ? images
-          : images.filter((img) => img.category === currentCategory);
+      // UPDATED: Removed the "all" category logic
+      const filteredImages = images.filter(
+        (img) => img.category === currentCategory
+      );
 
       if (filteredImages.length === 0) {
         emptyState?.classList.remove("hidden");

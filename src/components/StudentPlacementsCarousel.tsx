@@ -15,50 +15,34 @@ const StudentPlacementsCarousel: React.FC = () => {
 
   const students: Student[] = [
     {
-      name: "John Doe",
-      company: "Tech Solutions Inc.",
-      position: "Software Engineer",
+      name: "Neeraj",
+      company: "Wipro",
+      position: "",
       year: "2023",
-      image: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg",
+      image: "https://grvnijrdyyevvtlcssoo.supabase.co/storage/v1/object/sign/placements/WhatsApp%20Image%202025-11-21%20at%2014.31.14_f47e4f4c.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84NzUyZWZjOS1mZGY0LTRhMzctODA3My1kYTUzYWNhNmVhZGUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwbGFjZW1lbnRzL1doYXRzQXBwIEltYWdlIDIwMjUtMTEtMjEgYXQgMTQuMzEuMTRfZjQ3ZTRmNGMuanBnIiwiaWF0IjoxNzYzODk3MzE4LCJleHAiOjE3OTU0MzMzMTh9.iwOmP0Jru-B3ATOedokfTwlGzJ52yLZsG9GkqB8cB2E",
     },
     {
-      name: "Jane Smith",
-      company: "Data Analytics Corp",
-      position: "Data Scientist",
+      name: "Ajith dolichan",
+      company: "Acabes international",
+      position: "",
       year: "2023",
-      image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg",
+      image: "https://grvnijrdyyevvtlcssoo.supabase.co/storage/v1/object/sign/placements/WhatsApp%20Image%202025-11-21%20at%2014.31.14_78f7ae73.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84NzUyZWZjOS1mZGY0LTRhMzctODA3My1kYTUzYWNhNmVhZGUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwbGFjZW1lbnRzL1doYXRzQXBwIEltYWdlIDIwMjUtMTEtMjEgYXQgMTQuMzEuMTRfNzhmN2FlNzMuanBnIiwiaWF0IjoxNzYzODk3OTUxLCJleHAiOjE3OTU0MzM5NTF9.A9zfSr6GJUxKoDgqNex6qmdrS3r7KlXT7mtKTs2-B4g",
     },
     {
-      name: "Mike Johnson",
-      company: "Global Innovations",
-      position: "Product Manager",
+      name: "Rahul V P",
+      company: "XENO",
+      position: "Software support executive",
       year: "2023",
       image:
-        "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
+        "https://grvnijrdyyevvtlcssoo.supabase.co/storage/v1/object/sign/placements/WhatsApp%20Image%202025-11-21%20at%2014.31.15_1f9fdb2d.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84NzUyZWZjOS1mZGY0LTRhMzctODA3My1kYTUzYWNhNmVhZGUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwbGFjZW1lbnRzL1doYXRzQXBwIEltYWdlIDIwMjUtMTEtMjEgYXQgMTQuMzEuMTVfMWY5ZmRiMmQuanBnIiwiaWF0IjoxNzYzODk3NTExLCJleHAiOjE3OTU0MzM1MTF9.eRGmQXLFI0ELZ1DHn1SVozV9V0SpfsXk436M-y9g5tY",
     },
     {
-      name: "Sarah Wilson",
-      company: "Digital Solutions Ltd",
-      position: "UX Designer",
-      year: "2023",
+      name: "Abhinav p",
+      company: "Orivios technologyes",
+      position: "",
+      year: "2022-2025",
       image:
-        "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg",
-    },
-    {
-      name: "David Brown",
-      company: "Cloud Technologies",
-      position: "DevOps Engineer",
-      year: "2023",
-      image:
-        "https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg",
-    },
-    {
-      name: "Emily Davis",
-      company: "AI Research Labs",
-      position: "Machine Learning Engineer",
-      year: "2023",
-      image:
-        "https://images.pexels.com/photos/1181424/pexels-photo-1181424.jpeg",
+        "",
     },
   ];
 
@@ -162,24 +146,32 @@ const StudentPlacementsCarousel: React.FC = () => {
                     {slide.map((student, slideIndex) => (
                       <div
                         key={slideIndex}
-                        className="relative h-48 sm:h-56 lg:h-64 overflow-hidden rounded-lg hover:shadow-lg transition-shadow"
+                        className="relative h-48 sm:h-56 lg:h-64 overflow-hidden rounded-lg hover:shadow-lg transition-shadow bg-gray-100"
                       >
                         <img
-                          src={student.image}
+                          src={student.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(student.name)}&background=random`}
                           alt={student.name}
-                          className="w-full h-full object-cover a"
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(student.name)}&background=random`;
+                          }}
                         />
                         <div className="absolute inset-0 bg-black bg-opacity-0 transition-all hover:bg-opacity-50 flex flex-col justify-end p-4 sm:p-6">
-                          <h4 className="text-base sm:text-lg font-semibold text-white mb-1">
+                          <h4 className="text-base sm:text-lg font-semibold text-white mb-1 shadow-black drop-shadow-md">
                             {student.name}
                           </h4>
-                          <p className="text-white text-xs sm:text-sm mb-1">
-                            {student.position}
-                          </p>
-                          <p className="text-white text-xs sm:text-sm mb-1">
-                            {student.company}
-                          </p>
-                          <p className="text-gray-200 text-xs">
+                          {student.position && (
+                            <p className="text-white text-xs sm:text-sm mb-1 shadow-black drop-shadow-md">
+                              {student.position}
+                            </p>
+                          )}
+                          {student.company && (
+                            <p className="text-white text-xs sm:text-sm mb-1 shadow-black drop-shadow-md">
+                              {student.company}
+                            </p>
+                          )}
+                          <p className="text-gray-200 text-xs shadow-black drop-shadow-md">
                             Graduated: {student.year}
                           </p>
                         </div>
@@ -200,11 +192,10 @@ const StudentPlacementsCarousel: React.FC = () => {
                   goToSlide(index);
                   pauseAutoPlay();
                 }}
-                className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-200 ${
-                  currentSlide === index
-                    ? "bg-blue-600 scale-110"
-                    : "bg-gray-300 hover:bg-gray-400"
-                }`}
+                className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-200 ${currentSlide === index
+                  ? "bg-blue-600 scale-110"
+                  : "bg-gray-300 hover:bg-gray-400"
+                  }`}
               />
             ))}
           </div>
