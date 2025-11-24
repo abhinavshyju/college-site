@@ -65,15 +65,24 @@ const AcademicsSection: React.FC = () => {
   ];
 
   const levels = ["All Levels", "UG", "PG"];
-  const semesters = [
-    "All Semesters",
-    "Semester 1",
-    "Semester 2",
-    "Semester 3",
-    "Semester 4",
-    "Semester 5",
-    "Semester 6",
-  ];
+  const semesters = React.useMemo(() => {
+    const allSemesters = [
+      "All Semesters",
+      "Semester 1",
+      "Semester 2",
+      "Semester 3",
+      "Semester 4",
+      "Semester 5",
+      "Semester 6",
+      "Semester 7",
+      "Semester 8",
+    ];
+
+    if (selectedLevel === "PG") {
+      return allSemesters.slice(0, 5); // All Semesters + Sem 1-4
+    }
+    return allSemesters;
+  }, [selectedLevel]);
 
   // Derive available programs based on selected level
   const availablePrograms = React.useMemo(() => {
