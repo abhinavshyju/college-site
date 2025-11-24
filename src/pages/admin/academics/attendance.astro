@@ -71,7 +71,7 @@ if (!Astro.locals.session) {
             />
           </div>
 
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <label for="level" class="block text-sm font-medium text-gray-700"
                 >Level</label
@@ -102,6 +102,25 @@ if (!Astro.locals.session) {
               >
                 <option value="">Select Program</option>
                 <!-- Populated by JS -->
+              </select>
+            </div>
+
+            <div>
+              <label for="batch" class="block text-sm font-medium text-gray-700"
+                >Batch (Year)</label
+              >
+              <select
+                id="batch"
+                name="batch"
+                required
+                class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary"
+              >
+                <option value="">Select Batch</option>
+                <option value="2021-2024">2021-2024</option>
+                <option value="2022-2025">2022-2025</option>
+                <option value="2023-2026">2023-2026</option>
+                <option value="2024-2028">2024-2028</option>
+                <option value="2025-2029">2025-2029</option>
               </select>
             </div>
 
@@ -373,6 +392,7 @@ if (!Astro.locals.session) {
       document.getElementById("level").value = record.level || "";
       updateProgramDropdown();
       document.getElementById("program").value = record.program || "";
+      document.getElementById("batch").value = record.batch || "";
       document.getElementById("semester").value = record.semester || "";
       document.getElementById("date").value = new Date(record.date)
         .toISOString()

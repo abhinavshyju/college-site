@@ -26,11 +26,12 @@ export const POST: APIRoute = async ({ request }) => {
         const description = formData.get("description") as string;
         const level = formData.get("level") as string;
         const program = formData.get("program") as string;
+        const batch = formData.get("batch") as string;
         const semester = formData.get("semester") as string;
         const dateStr = formData.get("date") as string;
         const file = formData.get("file") as File;
 
-        if (!title || !level || !program || !semester || !dateStr) {
+        if (!title || !level || !program || !batch || !semester || !dateStr) {
             return new Response(JSON.stringify({ message: "Missing required fields" }), {
                 status: 400,
             });
@@ -52,6 +53,7 @@ export const POST: APIRoute = async ({ request }) => {
             link,
             level,
             program,
+            batch,
             semester,
             date: new Date(dateStr),
         });

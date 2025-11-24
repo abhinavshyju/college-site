@@ -40,6 +40,7 @@ interface AcademicDocument {
   link?: string;
   level: string;
   program: string;
+  batch?: string;
   semester: string;
   date: string;
 }
@@ -55,6 +56,7 @@ const AcademicsSection: React.FC = () => {
   // Filtering state
   const [selectedLevel, setSelectedLevel] = useState("All Levels");
   const [selectedProgram, setSelectedProgram] = useState("All Programs");
+  const [selectedBatch, setSelectedBatch] = useState("All Batches");
   const [selectedSemester, setSelectedSemester] = useState("All Semesters");
 
   const tabs = [
@@ -65,15 +67,27 @@ const AcademicsSection: React.FC = () => {
   ];
 
   const levels = ["All Levels", "UG", "PG"];
-  const semesters = [
-    "All Semesters",
-    "Semester 1",
-    "Semester 2",
-    "Semester 3",
-    "Semester 4",
-    "Semester 5",
-    "Semester 6",
-  ];
+  // Batch years: 2021-2023 are 3-year UG, 2024+ are 4-year UG
+  const batches = ["All Batches", "2021-2024", "2022-2025", "2023-2026", "2024-2028", "2025-2029"];
+
+  const semesters = React.useMemo(() => {
+    const allSemesters = [
+      "All Semesters",
+      "Semester 1",
+      "Semester 2",
+      "Semester 3",
+      "Semester 4",
+      "Semester 5",
+      "Semester 6",
+      "Semester 7",
+      "Semester 8",
+    ];
+
+    if (selectedLevel === "PG") {
+      return allSemesters.slice(0, 5); // All Semesters + Sem 1-4
+    }
+    return allSemesters;
+  }, [selectedLevel]);
 
   // Derive available programs based on selected level
   const availablePrograms = React.useMemo(() => {
@@ -134,6 +148,7 @@ const AcademicsSection: React.FC = () => {
   useEffect(() => {
     setSelectedLevel("All Levels");
     setSelectedProgram("All Programs");
+    setSelectedBatch("All Batches");
     setSelectedSemester("All Semesters");
   }, [activeTab]);
 
@@ -152,10 +167,12 @@ const AcademicsSection: React.FC = () => {
 
       const matchProgram =
         selectedProgram === "All Programs" || doc.program === selectedProgram;
+      const matchBatch =
+        selectedBatch === "All Batches" || (doc as any).batch === selectedBatch;
       const matchSemester =
         selectedSemester === "All Semesters" ||
         doc.semester === selectedSemester;
-      return matchLevel && matchProgram && matchSemester;
+      return matchLevel && matchProgram && matchBatch && matchSemester;
     });
   };
 
@@ -166,7 +183,7 @@ const AcademicsSection: React.FC = () => {
       <div className="space-y-6">
         {/* Filters */}
         <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Level
@@ -204,6 +221,22 @@ const AcademicsSection: React.FC = () => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
+                Batch (Year)
+              </label>
+              <select
+                value={selectedBatch}
+                onChange={(e) => setSelectedBatch(e.target.value)}
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-2 px-3 border"
+              >
+                {batches.map((batch) => (
+                  <option key={batch} value={batch}>
+                    {batch}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Semester
               </label>
               <select
@@ -234,6 +267,11 @@ const AcademicsSection: React.FC = () => {
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                       {doc.program}
                     </span>
+                    {doc.batch && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                        {doc.batch}
+                      </span>
+                    )}
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                       {doc.semester}
                     </span>
