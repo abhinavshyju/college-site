@@ -6,7 +6,7 @@ async function initializeGallery() {
   try {
     console.log("Initializing gallery system...");
 
-    // Initialize Supabase storage bucket
+
     await initializeStorageBucket();
     console.log("✅ Supabase storage bucket initialized");
 
@@ -34,5 +34,5 @@ async function initializeGallery() {
   }
 }
 
-// Run the initialization
+
 initializeGallery();

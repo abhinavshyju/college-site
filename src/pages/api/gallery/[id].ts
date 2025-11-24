@@ -54,7 +54,7 @@ export const GET: APIRoute = async ({ params, locals }) => {
 // PUT /api/gallery/[id] - Update gallery image
 export const PUT: APIRoute = async ({ params, request, locals }) => {
   try {
-    // Check authentication
+
     if (!locals.user) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -134,7 +134,7 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
 // DELETE /api/gallery/[id] - Delete gallery image
 export const DELETE: APIRoute = async ({ params, locals }) => {
   try {
-    // Check authentication
+
     if (!locals.user) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -155,7 +155,7 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
       });
     }
 
-    // Get image data first to get the file path
+
     const database = locals.db;
     const [image] = await database
       .select()
@@ -171,14 +171,14 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
       });
     }
 
-    // Delete from Supabase storage
+
     const { deleteImage, extractFilePathFromUrl } = await import(
       "../../../lib/supabase"
     );
     const filePath = extractFilePathFromUrl(image.imageUrl);
     await deleteImage(filePath);
 
-    // Delete from database
+
     await database.delete(galleryImages).where(eq(galleryImages.id, id));
 
     return new Response(

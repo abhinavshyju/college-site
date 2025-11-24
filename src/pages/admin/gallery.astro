@@ -88,7 +88,8 @@ if (!Astro.locals.session) {
               <option value="sports">Sports</option>
               <option value="cultural">Cultural</option>
               <option value="graduation">Graduation</option>
-              <option value="nss">NSS</option> </select>
+              <option value="nss">NSS</option>
+            </select>
           </div>
 
           <div>
@@ -179,7 +180,7 @@ if (!Astro.locals.session) {
           id="galleryGrid"
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
         >
-          </div>
+        </div>
 
         <div id="loadingSpinner" class="text-center py-8">
           <div
@@ -216,30 +217,29 @@ if (!Astro.locals.session) {
     let currentCategory = "events"; // CHANGED default category
     let images: any[] = [];
 
-    // DOM elements
     const uploadModal = document.getElementById(
-      "uploadModal"
+      "uploadModal",
     ) as HTMLElement | null;
     const addImageBtn = document.getElementById(
-      "addImageBtn"
+      "addImageBtn",
     ) as HTMLElement | null;
     const closeModal = document.getElementById(
-      "closeModal"
+      "closeModal",
     ) as HTMLElement | null;
     const cancelBtn = document.getElementById(
-      "cancelBtn"
+      "cancelBtn",
     ) as HTMLElement | null;
     const uploadForm = document.getElementById(
-      "uploadForm"
+      "uploadForm",
     ) as HTMLFormElement | null;
     const galleryGrid = document.getElementById(
-      "galleryGrid"
+      "galleryGrid",
     ) as HTMLElement | null;
     const loadingSpinner = document.getElementById(
-      "loadingSpinner"
+      "loadingSpinner",
     ) as HTMLElement | null;
     const emptyState = document.getElementById(
-      "emptyState"
+      "emptyState",
     ) as HTMLElement | null;
     const categoryFilters = document.querySelectorAll(".category-filter");
 
@@ -261,7 +261,6 @@ if (!Astro.locals.session) {
     // Category filter buttons
     categoryFilters.forEach((btn) => {
       btn.addEventListener("click", () => {
-        // Update active state
         categoryFilters.forEach((b) => {
           b.className =
             "category-filter px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200";
@@ -293,7 +292,6 @@ if (!Astro.locals.session) {
           uploadModal?.classList.add("hidden");
           uploadForm?.reset();
 
-          // Show success message
           showNotification("Image uploaded successfully!", "success");
         } else {
           const error = await response.json();
@@ -329,9 +327,8 @@ if (!Astro.locals.session) {
 
     // Render images
     function renderImages() {
-      // UPDATED: Removed the "all" category logic
       const filteredImages = images.filter(
-        (img) => img.category === currentCategory
+        (img) => img.category === currentCategory,
       );
 
       if (filteredImages.length === 0) {
@@ -369,7 +366,7 @@ if (!Astro.locals.session) {
             </div>
           </div>
         </div>
-      `
+      `,
           )
           .join("");
       }
@@ -400,7 +397,6 @@ if (!Astro.locals.session) {
       }
     };
 
-    // Show notification
     function showNotification(message: string, type: string) {
       const notification = document.createElement("div");
       notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
@@ -415,7 +411,6 @@ if (!Astro.locals.session) {
       }, 3000);
     }
 
-    // Initialize
     loadImages();
   </script>
 </AdminLayout>

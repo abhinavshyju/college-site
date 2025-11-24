@@ -35,7 +35,7 @@ export const PUT: APIRoute = async ({ params, request }) => {
             link = await uploadDocument(file, file.name);
         }
 
-        await db()
+        await db
             .update(attendanceTable)
             .set({
                 title,
@@ -69,7 +69,7 @@ export const DELETE: APIRoute = async ({ params }) => {
             });
         }
 
-        await db().delete(attendanceTable).where(eq(attendanceTable.id, id));
+        await db.delete(attendanceTable).where(eq(attendanceTable.id, id));
 
         return new Response(JSON.stringify({ message: "Attendance deleted" }), {
             status: 200,

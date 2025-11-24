@@ -11,8 +11,6 @@ const supabase = createClient(
 async function migrate() {
     try {
         console.log('Starting migration with Supabase client...');
-
-        // Add batch column to attendance table
         console.log('Adding batch column to attendance table...');
         const { error: error1 } = await supabase.rpc('exec_sql', {
             sql: `ALTER TABLE attendance ADD COLUMN IF NOT EXISTS batch text NOT NULL DEFAULT ''`
@@ -20,7 +18,7 @@ async function migrate() {
 
         if (error1) {
             console.error('Error on attendance table:', error1);
-            // Try alternative approach
+            //alternative approach
             console.log('Trying direct SQL execution...');
             const { error: altError1 } = await supabase
                 .from('attendance')
@@ -34,7 +32,7 @@ async function migrate() {
             console.log('✓ Attendance table updated');
         }
 
-        // Add batch column to internal_marks table
+        // Add batch column to internal_marks
         console.log('Adding batch column to internal_marks table...');
         const { error: error2 } = await supabase.rpc('exec_sql', {
             sql: `ALTER TABLE internal_marks ADD COLUMN IF NOT EXISTS batch text NOT NULL DEFAULT ''`

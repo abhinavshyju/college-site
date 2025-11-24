@@ -39,7 +39,6 @@ export const PUT: APIRoute = async (ctx) => {
   try {
     const body = await ctx.request.json();
 
-    // Validate required fields
     if (
       !body.name ||
       !body.hod ||
@@ -86,7 +85,6 @@ export const DELETE: APIRoute = async (ctx) => {
   }
 
   try {
-    // Check if department exists first
     const existing = await db
       .select()
       .from(departmentsTable)

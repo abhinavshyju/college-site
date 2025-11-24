@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const GET: APIRoute = async () => {
     try {
-        const attendance = await db()
+        const attendance = await db
             .select()
             .from(attendanceTable)
             .orderBy(desc(attendanceTable.date));
@@ -46,7 +46,7 @@ export const POST: APIRoute = async ({ request }) => {
 
         const id = uuidv4();
 
-        await db().insert(attendanceTable).values({
+        await db.insert(attendanceTable).values({
             id,
             title,
             description,

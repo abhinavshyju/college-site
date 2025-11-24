@@ -29,7 +29,7 @@ export const GET: APIRoute = async (ctx) => {
 
 export const POST: APIRoute = async (ctx) => {
   const db = ctx.locals.db;
-  const auth = Auth.getInstance(db); // This line uses the imported 'Auth'
+  const auth = Auth.getInstance(db);
   const user = ctx.locals.user;
   if (!user) return new Response("Unauthorized", { status: 401 });
 
