@@ -50,6 +50,7 @@ export const attendanceTable = pgTable("attendance", {
   link: text("link"), // Can store the PDF URL
   level: text("level").notNull(), // "UG" or "PG"
   program: text("program").notNull(), // e.g., "BSc CS"
+  batch: text("batch").notNull(), // e.g., "2023-2027"
   semester: text("semester").notNull(), // e.g., "Semester 1"
   date: timestamp("date", { withTimezone: true, mode: "date" }).notNull(),
   createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
@@ -67,6 +68,7 @@ export const internalMarksTable = pgTable("internal_marks", {
   link: text("link"), // Can store the PDF URL
   level: text("level").notNull(), // "UG" or "PG"
   program: text("program").notNull(), // e.g., "BSc CS"
+  batch: text("batch").notNull(), // e.g., "2023-2027"
   semester: text("semester").notNull(), // e.g., "Semester 1"
   date: timestamp("date", { withTimezone: true, mode: "date" }).notNull(),
   createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
