@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Camera, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Camera, X, ChevronLeft, ChevronRight, Play, FileText } from "lucide-react";
 
 interface GalleryImage {
   id: number;
@@ -32,7 +32,6 @@ const GallerySection: React.FC = () => {
     { id: "graduation", label: "Graduation" },
   ];
 
-  // Load images from API
   useEffect(() => {
     const loadImages = async () => {
       try {
@@ -89,7 +88,57 @@ const GallerySection: React.FC = () => {
     ? filteredImages.find((img) => img.id === selectedImage)
     : null;
 
-  // Loading state
+  const renderMediaItem = (image: GalleryImage, inLightbox = false) => {
+    if (image.mimeType?.startsWith("video/")) {
+      return (
+        <div className={`relative ${inLightbox ? "w-full h-full flex items-center justify-center" : "w-full h-48"}`}>
+          <video
+            src={image.imageUrl}
+            className={inLightbox ? "max-w-full max-h-full" : "w-full h-full object-cover"}
+            controls={inLightbox}
+            muted={!inLightbox}
+          />
+          {!inLightbox && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors">
+              <Play className="w-12 h-12 text-white opacity-80" />
+            </div>
+          )}
+        </div>
+      );
+    } else if (image.mimeType === "application/pdf") {
+      if (inLightbox) {
+        return (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-white p-8 rounded-lg">
+            <FileText className="w-24 h-24 text-red-500 mb-4" />
+            <h3 className="text-xl font-semibold mb-4">{image.title}</h3>
+            <a
+              href={image.imageUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Open PDF Document
+            </a>
+          </div>
+        );
+      }
+      return (
+        <div className="w-full h-48 flex flex-col items-center justify-center bg-gray-100 text-gray-500">
+          <FileText className="w-12 h-12 mb-2 text-red-500" />
+          <span className="text-sm font-medium">PDF Document</span>
+        </div>
+      );
+    }
+
+    return (
+      <img
+        src={image.imageUrl}
+        alt={image.title}
+        className={inLightbox ? "max-w-full max-h-full object-contain" : "w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"}
+      />
+    );
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -116,7 +165,6 @@ const GallerySection: React.FC = () => {
     );
   }
 
-  // Error state
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -158,7 +206,6 @@ const GallerySection: React.FC = () => {
             </p>
           </div>
 
-          {/* Category Filter */}
           <div className="border-b border-gray-200 px-6 py-4">
             <div className="flex flex-wrap gap-2">
               {categories.map((category) => (
@@ -176,7 +223,6 @@ const GallerySection: React.FC = () => {
             </div>
           </div>
 
-          {/* Gallery Grid */}
           <div className="p-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {filteredImages.map((image) => (
@@ -185,11 +231,7 @@ const GallerySection: React.FC = () => {
                   className="relative group cursor-pointer overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow"
                   onClick={() => openLightbox(image.id)}
                 >
-                  <img
-                    src={image.imageUrl}
-                    alt={image.title}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
+                  {renderMediaItem(image)}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300 flex items-end">
                     <div className="p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <h3 className="font-semibold text-sm">{image.title}</h3>
@@ -206,7 +248,7 @@ const GallerySection: React.FC = () => {
               <div className="text-center py-12">
                 <Camera className="h-16 w-16 text-gray-400 mx-auto mb-4" />
                 <p className="text-gray-600">
-                  No images found in this category.
+                  No items found in this category.
                 </p>
               </div>
             )}
@@ -214,11 +256,9 @@ const GallerySection: React.FC = () => {
         </div>
       </div>
 
-      {/* Lightbox Modal */}
       {selectedImage && selectedImageData && (
         <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-          <div className="relative max-w-4xl max-h-full">
-            {/* Close Button */}
+          <div className="relative max-w-4xl w-full max-h-full flex items-center justify-center">
             <button
               onClick={closeLightbox}
               className="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
@@ -226,7 +266,6 @@ const GallerySection: React.FC = () => {
               <X className="h-8 w-8" />
             </button>
 
-            {/* Navigation Buttons */}
             <button
               onClick={() => navigateImage("prev")}
               className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 z-10"
@@ -241,14 +280,10 @@ const GallerySection: React.FC = () => {
               <ChevronRight className="h-8 w-8" />
             </button>
 
-            {/* Image */}
-            <img
-              src={selectedImageData.imageUrl}
-              alt={selectedImageData.title}
-              className="max-w-full max-h-full object-contain"
-            />
+            <div className="w-full h-[80vh] flex items-center justify-center">
+              {renderMediaItem(selectedImageData, true)}
+            </div>
 
-            {/* Image Info */}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
               <h3 className="text-white text-xl font-semibold mb-2">
                 {selectedImageData.title}

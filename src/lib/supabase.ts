@@ -8,10 +8,8 @@ if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceKey) {
   throw new Error("Missing Supabase environment variables");
 }
 
-// Client for public operations
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Admin client for server-side operations
 export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
   auth: {
     autoRefreshToken: false,
@@ -19,16 +17,13 @@ export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
   },
 });
 
-// Storage bucket name
 export const GALLERY_BUCKET = "gallery-images";
 export const DOCUMENTS_BUCKET = "academic-documents";
 
-// Initialize storage bucket if it doesn't exist
 export async function initializeStorageBucket() {
   try {
     const { data: buckets } = await supabaseAdmin.storage.listBuckets();
 
-    // Initialize Gallery Bucket
     const galleryBucketExists = buckets?.some(
       (bucket) => bucket.name === GALLERY_BUCKET
     );
@@ -43,19 +38,19 @@ export async function initializeStorageBucket() {
             "image/png",
             "image/webp",
             "image/gif",
+            "video/mp4",
+            "video/webm",
+            "application/pdf",
           ],
-          fileSizeLimit: 10 * 1024 * 1024, // 10MB
+          fileSizeLimit: 50 * 1024 * 1024,
         }
       );
 
       if (error) {
         console.error("Error creating gallery bucket:", error);
-      } else {
-        console.log(`Storage bucket '${GALLERY_BUCKET}' created successfully`);
       }
     }
 
-    // Initialize Documents Bucket
     const documentsBucketExists = buckets?.some(
       (bucket) => bucket.name === DOCUMENTS_BUCKET
     );
@@ -65,15 +60,20 @@ export async function initializeStorageBucket() {
         DOCUMENTS_BUCKET,
         {
           public: true,
-          allowedMimeTypes: ["application/pdf"],
-          fileSizeLimit: 20 * 1024 * 1024, // 20MB
+          allowedMimeTypes: [
+            "application/pdf",
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "video/mp4",
+            "video/webm",
+          ],
+          fileSizeLimit: 50 * 1024 * 1024,
         }
       );
 
       if (error) {
         console.error("Error creating documents bucket:", error);
-      } else {
-        console.log(`Storage bucket '${DOCUMENTS_BUCKET}' created successfully`);
       }
     }
   } catch (error) {
@@ -82,7 +82,6 @@ export async function initializeStorageBucket() {
   }
 }
 
-// Upload image to Supabase storage
 export async function uploadImage(
   file: File,
   fileName: string
@@ -98,13 +97,13 @@ export async function uploadImage(
       .upload(filePath, file, {
         cacheControl: "3600",
         upsert: false,
+        contentType: file.type,
       });
 
     if (error) {
       throw error;
     }
 
-    // Get public URL
     const { data: urlData } = supabaseAdmin.storage
       .from(GALLERY_BUCKET)
       .getPublicUrl(data.path);
@@ -116,7 +115,6 @@ export async function uploadImage(
   }
 }
 
-// Upload document to Supabase storage
 export async function uploadDocument(
   file: File,
   fileName: string
@@ -127,7 +125,6 @@ export async function uploadDocument(
       .toString(36)
       .substring(2)}.${fileExt}`;
 
-    // Ensure bucket exists
     await initializeStorageBucket();
 
     const { data, error } = await supabaseAdmin.storage
@@ -135,14 +132,13 @@ export async function uploadDocument(
       .upload(filePath, file, {
         cacheControl: "3600",
         upsert: false,
-        contentType: "application/pdf",
+        contentType: file.type,
       });
 
     if (error) {
       throw error;
     }
 
-    // Get public URL
     const { data: urlData } = supabaseAdmin.storage
       .from(DOCUMENTS_BUCKET)
       .getPublicUrl(data.path);
@@ -154,7 +150,6 @@ export async function uploadDocument(
   }
 }
 
-// Delete image from Supabase storage
 export async function deleteImage(filePath: string): Promise<void> {
   try {
     const { error } = await supabaseAdmin.storage
@@ -170,7 +165,6 @@ export async function deleteImage(filePath: string): Promise<void> {
   }
 }
 
-// Delete document from Supabase storage
 export async function deleteDocument(filePath: string): Promise<void> {
   try {
     const { error } = await supabaseAdmin.storage
@@ -186,7 +180,6 @@ export async function deleteDocument(filePath: string): Promise<void> {
   }
 }
 
-// Extract file path from URL
 export function extractFilePathFromUrl(url: string): string {
   const urlParts = url.split("/");
   return urlParts[urlParts.length - 1];

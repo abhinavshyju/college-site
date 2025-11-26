@@ -28,8 +28,7 @@ if (!Astro.locals.session) {
 
     <div class="rounded-lg border bg-card">
       <div class="p-6">
-        <div id="attendance-list" class="space-y-4">
-        </div>
+        <div id="attendance-list" class="space-y-4"></div>
       </div>
     </div>
   </section>
@@ -160,13 +159,13 @@ if (!Astro.locals.session) {
 
           <div>
             <label for="file" class="block text-sm font-medium text-gray-700"
-              >Upload PDF (Optional)</label
+              >Upload Document (Optional)</label
             >
             <input
               type="file"
               id="file"
               name="file"
-              accept="application/pdf"
+              accept="image/*,video/*,application/pdf"
               class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-primary file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-primary/90"
             />
             <div id="current-file-container" class="mt-2 hidden">
@@ -176,13 +175,13 @@ if (!Astro.locals.session) {
                   id="current-file-link"
                   href="#"
                   target="_blank"
-                  class="text-blue-600 hover:underline">View PDF</a
+                  class="text-blue-600 hover:underline">View File</a
                 >
               </p>
             </div>
             <p class="mt-1 text-xs text-gray-500">
-              Upload attendance sheet (PDF only). Leave empty to keep existing
-              file.
+              Upload attendance sheet (Image, Video, PDF). Leave empty to keep
+              existing file.
             </p>
           </div>
 
@@ -356,7 +355,6 @@ if (!Astro.locals.session) {
         .join("");
     }
 
-    // Add attendance
     function addAttendance() {
       if (isLoading) return;
 
@@ -371,7 +369,6 @@ if (!Astro.locals.session) {
       document.getElementById("attendance-modal").classList.remove("hidden");
     }
 
-    // Edit attendance
     function editAttendance(id) {
       const record = attendanceRecords.find((r) => r.id === id);
       if (!record) return;
@@ -456,7 +453,7 @@ if (!Astro.locals.session) {
 
         const response = await fetch(url, {
           method,
-          body: formData, 
+          body: formData,
         });
 
         if (response.ok) {

@@ -4,23 +4,23 @@ import { Calendar, Users } from "lucide-react";
 const EventsSection: React.FC = () => {
   const events = [
     {
-      title: "National Service Scheme (NSS) Annual Camp 2024",
+      title: "Best NSS Award 2024",
       date: "March 15-17, 2024",
       description:
         "Three-day national conference featuring research presentations, keynote speeches, and networking sessions.",
       image:
         "https://grvnijrdyyevvtlcssoo.supabase.co/storage/v1/object/public/Events/WhatsApp%20Image%202025-10-11%20at%2021.52.13_3c6c115f.jpg",
-      participants: "200+ Participants",
-      type: "Conference",
+      participants: "",
+      type: "",
     },
     {
-      title: "Annual Cultural Festival - Kaleidoscope 2024",
-      date: "February 20-22, 2024",
+      title: "Freshers Day celebration -- Coming Soon...",
+      date: "December 4th 2025",
       description:
-        "Vibrant cultural festival showcasing student talents in music, dance, drama, and literary arts.",
+        "",
       image:
-        "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg",
-      participants: "500+ Students",
+        "https://grvnijrdyyevvtlcssoo.supabase.co/storage/v1/object/public/Events/WhatsApp%20Image%202025-11-26%20at%2020.11.32_5a803d6c.jpg",
+      participants: "",
       type: "Cultural",
     },
   ];

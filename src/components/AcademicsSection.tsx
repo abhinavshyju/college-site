@@ -9,6 +9,8 @@ import {
   FileText,
   Download,
   Filter,
+  Video,
+  Image as ImageIcon,
 } from "lucide-react";
 
 interface Program {
@@ -53,7 +55,6 @@ const AcademicsSection: React.FC = () => {
   const [internalMarks, setInternalMarks] = useState<AcademicDocument[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Filtering state
   const [selectedLevel, setSelectedLevel] = useState("All Levels");
   const [selectedProgram, setSelectedProgram] = useState("All Programs");
   const [selectedBatch, setSelectedBatch] = useState("All Batches");
@@ -67,8 +68,14 @@ const AcademicsSection: React.FC = () => {
   ];
 
   const levels = ["All Levels", "UG", "PG"];
-  // Batch years: 2021-2023 are 3-year UG, 2024+ are 4-year UG
-  const batches = ["All Batches", "2021-2024", "2022-2025", "2023-2026", "2024-2028", "2025-2029"];
+  const batches = [
+    "All Batches",
+    "2021-2024",
+    "2022-2025",
+    "2023-2026",
+    "2024-2028",
+    "2025-2029",
+  ];
 
   const semesters = React.useMemo(() => {
     const allSemesters = [
@@ -84,12 +91,11 @@ const AcademicsSection: React.FC = () => {
     ];
 
     if (selectedLevel === "PG") {
-      return allSemesters.slice(0, 5); // All Semesters + Sem 1-4
+      return allSemesters.slice(0, 5);
     }
     return allSemesters;
   }, [selectedLevel]);
 
-  // Derive available programs based on selected level
   const availablePrograms = React.useMemo(() => {
     let filtered = programs;
     if (selectedLevel === "UG") {
@@ -144,7 +150,6 @@ const AcademicsSection: React.FC = () => {
     fetchData();
   }, []);
 
-  // Reset filters when tab changes
   useEffect(() => {
     setSelectedLevel("All Levels");
     setSelectedProgram("All Programs");
@@ -176,12 +181,28 @@ const AcademicsSection: React.FC = () => {
     });
   };
 
+  const getFileTypeIcon = (url: string) => {
+    const extension = url.split(".").pop()?.toLowerCase();
+    if (["mp4", "webm", "ogg"].includes(extension || ""))
+      return <Video className="h-4 w-4" />;
+    if (["jpg", "jpeg", "png", "gif", "webp"].includes(extension || ""))
+      return <ImageIcon className="h-4 w-4" />;
+    return <FileText className="h-4 w-4" />;
+  };
+
+  const getFileTypeText = (url: string) => {
+    const extension = url.split(".").pop()?.toLowerCase();
+    if (["mp4", "webm", "ogg"].includes(extension || "")) return "View Video";
+    if (["jpg", "jpeg", "png", "gif", "webp"].includes(extension || ""))
+      return "View Image";
+    return "View Document";
+  };
+
   const renderDocumentList = (documents: AcademicDocument[], type: string) => {
     const filteredDocs = filterDocuments(documents);
 
     return (
       <div className="space-y-6">
-        {/* Filters */}
         <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
@@ -192,7 +213,7 @@ const AcademicsSection: React.FC = () => {
                 value={selectedLevel}
                 onChange={(e) => {
                   setSelectedLevel(e.target.value);
-                  setSelectedProgram("All Programs"); // Reset program when level changes
+                  setSelectedProgram("All Programs");
                 }}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-2 px-3 border"
               >
@@ -254,7 +275,6 @@ const AcademicsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Document List */}
         {filteredDocs.length > 0 ? (
           <div className="grid grid-cols-1 gap-4">
             {filteredDocs.map((doc) => (
@@ -295,8 +315,8 @@ const AcademicsSection: React.FC = () => {
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium whitespace-nowrap"
                   >
-                    {type === "attendance" ? "View Attendance" : "View Marks"}
-                    <ExternalLink className="h-4 w-4" />
+                    {getFileTypeText(doc.link)}
+                    {getFileTypeIcon(doc.link)}
                   </a>
                 )}
               </div>
@@ -306,7 +326,8 @@ const AcademicsSection: React.FC = () => {
           <div className="text-center py-12 bg-white rounded-lg border border-dashed border-gray-300">
             <FileText className="h-12 w-12 text-gray-400 mx-auto mb-3" />
             <p className="text-gray-500">
-              No {type === "attendance" ? "attendance records" : "internal marks"}{" "}
+              No{" "}
+              {type === "attendance" ? "attendance records" : "internal marks"}{" "}
               found matching your filters.
             </p>
           </div>
@@ -546,7 +567,6 @@ const AcademicsSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Tabs Navigation */}
           <div className="border-b border-gray-200">
             <div className="px-6">
               <div className="flex flex-wrap -mb-px">
@@ -555,8 +575,8 @@ const AcademicsSection: React.FC = () => {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`mr-8 py-4 px-1 border-b-2 font-medium text-sm ${activeTab === tab.id
-                      ? "border-blue-500 text-blue-600"
-                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        ? "border-blue-500 text-blue-600"
+                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                       }`}
                   >
                     {tab.label}
@@ -566,7 +586,6 @@ const AcademicsSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Tab Content */}
           <div className="p-6">{renderTabContent()}</div>
         </div>
       </div>
