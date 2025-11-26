@@ -57,6 +57,13 @@
       "when": 1763893978180,
       "tag": "0007_careful_mad_thinker",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1764161031683,
+      "tag": "0008_goofy_nemesis",
+      "breakpoints": true
     }
   ]
 }
