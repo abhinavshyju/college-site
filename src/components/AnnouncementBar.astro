@@ -1,36 +1,62 @@
 ---
-const announcements = [
-  { text: "Welcome to the new Announcement Bar! We're excited for a year of learning and growth.", highlight: "Welcome" },
-  { text: "Fifth semester examinations begin on October 30 — check the timetable in the student portal.", highlight: "October 30" },
-];
+import { db } from "@/db";
+import { announcementsTable } from "@/db/schema";
+import { desc, eq } from "drizzle-orm";
 
-const renderText = (text: string, highlight?: string) => {
+const announcements = await db
+  .select()
+  .from(announcementsTable)
+  .where(eq(announcementsTable.active, true))
+  .orderBy(desc(announcementsTable.createdAt));
+
+const renderText = (text: string, highlight?: string | null) => {
   if (!highlight || !text.toLowerCase().includes(highlight.toLowerCase())) {
     return text;
   }
-  const regex = new RegExp(`(${highlight})`, 'gi');
+  const regex = new RegExp(`(${highlight})`, "gi");
   return text.replace(regex, `<strong class="highlight">$1</strong>`);
 };
 ---
 
 <div class="announcement-wrapper">
   <div class="announcement-label">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
-      <path d="M10 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9.5L14.5 3z" />
-      <polyline points="14 2 14 8 20 8" />
-      <line x1="12" x2="12" y1="18" y2="12" />
-      <line x1="9" x2="15" y1="15" y2="15" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="icon"
+    >
+      <path
+        d="M10 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9.5L14.5 3z"
+      ></path>
+      <polyline points="14 2 14 8 20 8"></polyline>
+      <line x1="12" x2="12" y1="18" y2="12"></line>
+      <line x1="9" x2="15" y1="15" y2="15"></line>
     </svg>
     <span>Announcements</span>
   </div>
   <div class="announcement-bar">
     <div class="announcement-content">
-      {announcements.map((announcement) => (
-        <span set:html={renderText(announcement.text, announcement.highlight)} />
-      ))}
-      {announcements.map((announcement) => (
-        <span set:html={renderText(announcement.text, announcement.highlight)} />
-      ))}
+      {
+        announcements.map((announcement) => (
+          <span
+            set:html={renderText(announcement.text, announcement.highlight)}
+          />
+        ))
+      }
+      {
+        announcements.map((announcement) => (
+          <span
+            set:html={renderText(announcement.text, announcement.highlight)}
+          />
+        ))
+      }
     </div>
   </div>
 </div>
@@ -63,7 +89,6 @@ const renderText = (text: string, highlight?: string) => {
     align-items: center;
     gap: 8px;
     font-size: 0.9rem;
-    
   }
 
   .announcement-bar {
@@ -78,7 +103,7 @@ const renderText = (text: string, highlight?: string) => {
 
   .announcement-bar::before,
   .announcement-bar::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 0;
@@ -88,17 +113,25 @@ const renderText = (text: string, highlight?: string) => {
 
   .announcement-bar::before {
     left: 0;
-    background: linear-gradient(to right, var(--bar-bg-color) 0%, transparent 100%);
+    background: linear-gradient(
+      to right,
+      var(--bar-bg-color) 0%,
+      transparent 100%
+    );
   }
 
   .announcement-bar::after {
     right: 0;
-    background: linear-gradient(to left, var(--bar-bg-color) 0%, transparent 100%);
+    background: linear-gradient(
+      to left,
+      var(--bar-bg-color) 0%,
+      transparent 100%
+    );
   }
 
   .announcement-content {
     display: inline-block;
-    animation: marquee 45s linear infinite;
+    animation: marquee 15s linear infinite;
     white-space: nowrap;
   }
 
@@ -110,7 +143,7 @@ const renderText = (text: string, highlight?: string) => {
   }
 
   .announcement-content span::before {
-    content: '•';
+    content: "•";
     color: var(--label-bg-color);
     margin-right: 2.5rem;
     font-size: 1.5em;
@@ -118,7 +151,7 @@ const renderText = (text: string, highlight?: string) => {
   }
 
   .announcement-content span:first-child::before {
-    content: '';
+    content: "";
     margin-right: 0;
   }
 
@@ -132,8 +165,12 @@ const renderText = (text: string, highlight?: string) => {
   }
 
   @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
 
   .announcement-bar:hover .announcement-content {

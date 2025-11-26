@@ -3,7 +3,7 @@ import { defineMiddleware } from "astro:middleware";
 import { Auth } from "./lib/auth";
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  context.locals.db = db();
+  context.locals.db = db;
 
   context.locals.auth = Auth.getInstance(context.locals.db);
   const auth = context.locals.auth;

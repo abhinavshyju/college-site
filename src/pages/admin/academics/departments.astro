@@ -29,13 +29,11 @@ if (!Astro.locals.session) {
     <div class="rounded-lg border bg-card">
       <div class="p-6">
         <div id="departments-list" class="space-y-4">
-          <!-- Departments will be loaded here -->
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Add/Edit Department Modal -->
   <div id="department-modal" class="fixed inset-0 z-50 hidden bg-black/50">
     <div class="flex min-h-full items-center justify-center p-4">
       <div class="w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg">
@@ -167,7 +165,6 @@ if (!Astro.locals.session) {
     let departments = [];
     let editingDepartment = null;
 
-    // Load departments
     async function loadDepartments() {
       try {
         const response = await fetch("/api/admin/academics/departments");
@@ -182,7 +179,6 @@ if (!Astro.locals.session) {
       }
     }
 
-    // Render departments
     function renderDepartments() {
       const container = document.getElementById("departments-list");
       if (departments.length === 0) {
@@ -247,11 +243,9 @@ if (!Astro.locals.session) {
         )
         .join("");
 
-      // Add event listeners to the dynamically created buttons
       addButtonEventListeners();
     }
 
-    // Add event listeners to edit and delete buttons
     function addButtonEventListeners() {
       // Edit buttons
       document.querySelectorAll(".edit-department-btn").forEach((btn) => {
@@ -378,7 +372,6 @@ if (!Astro.locals.session) {
 
     // Show notification
     function showNotification(message, type = "info") {
-      // Create notification element
       const notification = document.createElement("div");
       notification.className = `fixed top-4 right-4 z-50 p-4 rounded-md shadow-lg ${
         type === "success"
@@ -391,7 +384,6 @@ if (!Astro.locals.session) {
 
       document.body.appendChild(notification);
 
-      // Remove notification after 3 seconds
       setTimeout(() => {
         if (notification.parentNode) {
           notification.parentNode.removeChild(notification);
@@ -399,7 +391,6 @@ if (!Astro.locals.session) {
       }, 3000);
     }
 
-    // Event listeners
     document
       .getElementById("add-department-btn")
       .addEventListener("click", addDepartment);
@@ -416,7 +407,6 @@ if (!Astro.locals.session) {
         saveDepartment(new FormData(e.target));
       });
 
-    // Close modal on background click
     document
       .getElementById("department-modal")
       .addEventListener("click", (e) => {
@@ -425,7 +415,6 @@ if (!Astro.locals.session) {
         }
       });
 
-    // Load departments on page load
     loadDepartments();
   </script>
 </AdminLayout>

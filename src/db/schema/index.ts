@@ -3,3 +3,4 @@ export * from "./academics";
 export * from "./user";
 export * from "./session";
 export * from "./gallery";
+export * from "./announcements";

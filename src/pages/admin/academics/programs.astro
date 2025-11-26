@@ -203,7 +203,6 @@ if (!Astro.locals.session) {
       const addBtn = document.getElementById("add-program-btn");
       const addBtnText = document.getElementById("add-btn-text");
 
-      // Show loading state
       container.innerHTML =
         '<div class="flex items-center justify-center py-8"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div><span class="ml-2 text-gray-600">Loading programs...</span></div>';
       addBtn.disabled = true;
@@ -264,7 +263,7 @@ if (!Astro.locals.session) {
             </div>
           </div>
         </div>
-      `
+      `,
         )
         .join("");
     }
@@ -287,7 +286,6 @@ if (!Astro.locals.session) {
       editingProgram = program;
       document.getElementById("modal-title").textContent = "Edit Program";
 
-      // Fill form
       document.getElementById("name").value = program.name;
       document.getElementById("level").value = program.level;
       document.getElementById("duration").value = program.duration;
@@ -325,7 +323,7 @@ if (!Astro.locals.session) {
             .json()
             .catch(() => ({ message: "Unknown error" }));
           alert(
-            `Error deleting program: ${errorData.message || "Please try again"}`
+            `Error deleting program: ${errorData.message || "Please try again"}`,
           );
         }
       } catch (error) {
@@ -338,18 +336,16 @@ if (!Astro.locals.session) {
       }
     }
 
-    // Make functions globally accessible
     window.editProgram = editProgram;
     window.deleteProgram = deleteProgram;
 
     // Save program
     async function saveProgram(formData) {
       const saveBtn = document.querySelector(
-        '#program-form button[type="submit"]'
+        '#program-form button[type="submit"]',
       );
       const originalText = saveBtn.textContent;
 
-      // Disable save button and show loading state
       saveBtn.disabled = true;
       saveBtn.textContent = editingProgram ? "Updating..." : "Saving...";
       saveBtn.classList.add("opacity-50", "cursor-not-allowed");
@@ -391,14 +387,13 @@ if (!Astro.locals.session) {
             .json()
             .catch(() => ({ message: "Unknown error" }));
           alert(
-            `Error saving program: ${errorData.message || "Please try again"}`
+            `Error saving program: ${errorData.message || "Please try again"}`,
           );
         }
       } catch (error) {
         console.error("Error saving program:", error);
         alert("Error saving program");
       } finally {
-        // Re-enable save button
         saveBtn.disabled = false;
         saveBtn.textContent = originalText;
         saveBtn.classList.remove("opacity-50", "cursor-not-allowed");
@@ -420,14 +415,12 @@ if (!Astro.locals.session) {
       saveProgram(new FormData(e.target));
     });
 
-    // Close modal on background click
     document.getElementById("program-modal").addEventListener("click", (e) => {
       if (e.target.id === "program-modal") {
         document.getElementById("program-modal").classList.add("hidden");
       }
     });
 
-    // Load programs on page load
     loadPrograms();
   </script>
 </AdminLayout>

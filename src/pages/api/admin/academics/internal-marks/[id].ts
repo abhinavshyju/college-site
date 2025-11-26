@@ -35,7 +35,7 @@ export const PUT: APIRoute = async ({ params, request }) => {
             link = await uploadDocument(file, file.name);
         }
 
-        await db()
+        await db
             .update(internalMarksTable)
             .set({
                 title,
@@ -69,7 +69,7 @@ export const DELETE: APIRoute = async ({ params }) => {
             });
         }
 
-        await db().delete(internalMarksTable).where(eq(internalMarksTable.id, id));
+        await db.delete(internalMarksTable).where(eq(internalMarksTable.id, id));
 
         return new Response(JSON.stringify({ message: "Internal marks deleted" }), {
             status: 200,

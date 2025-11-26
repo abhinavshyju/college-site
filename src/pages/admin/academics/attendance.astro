@@ -29,13 +29,11 @@ if (!Astro.locals.session) {
     <div class="rounded-lg border bg-card">
       <div class="p-6">
         <div id="attendance-list" class="space-y-4">
-          <!-- Attendance records will be loaded here -->
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Add/Edit Attendance Modal -->
   <div id="attendance-modal" class="fixed inset-0 z-50 hidden bg-black/50">
     <div class="flex min-h-full items-center justify-center p-4">
       <div class="w-full max-w-lg rounded-lg bg-white p-6 shadow-lg">
@@ -101,7 +99,6 @@ if (!Astro.locals.session) {
                 class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary"
               >
                 <option value="">Select Program</option>
-                <!-- Populated by JS -->
               </select>
             </div>
 
@@ -241,7 +238,6 @@ if (!Astro.locals.session) {
     let editingRecord = null;
     let isLoading = false;
 
-    // Load programs for dropdown
     async function loadPrograms() {
       try {
         const response = await fetch("/api/admin/academics/programs");
@@ -267,7 +263,7 @@ if (!Astro.locals.session) {
 
       filteredPrograms.forEach((p) => {
         const option = document.createElement("option");
-        option.value = p.name; // Storing name as requested, or could use ID
+        option.value = p.name;
         option.textContent = p.name;
         programSelect.appendChild(option);
       });
@@ -277,7 +273,6 @@ if (!Astro.locals.session) {
       .getElementById("level")
       .addEventListener("change", updateProgramDropdown);
 
-    // Load attendance records
     async function loadAttendance() {
       if (isLoading) return;
 
@@ -306,7 +301,6 @@ if (!Astro.locals.session) {
       }
     }
 
-    // Render attendance records
     function renderAttendance() {
       const container = document.getElementById("attendance-list");
       if (attendanceRecords.length === 0) {
@@ -372,7 +366,6 @@ if (!Astro.locals.session) {
       document.getElementById("date").valueAsDate = new Date();
       updateProgramDropdown();
 
-      // Hide current file container
       document.getElementById("current-file-container").classList.add("hidden");
 
       document.getElementById("attendance-modal").classList.remove("hidden");
@@ -398,7 +391,6 @@ if (!Astro.locals.session) {
         .toISOString()
         .split("T")[0];
 
-      // Show current file if it exists and is a PDF (simple check)
       const fileContainer = document.getElementById("current-file-container");
       const fileLink = document.getElementById("current-file-link");
 
@@ -412,7 +404,6 @@ if (!Astro.locals.session) {
       document.getElementById("attendance-modal").classList.remove("hidden");
     }
 
-    // Delete attendance
     async function deleteAttendance(id) {
       if (!confirm("Are you sure you want to delete this record?")) return;
 
@@ -443,11 +434,9 @@ if (!Astro.locals.session) {
       }
     }
 
-    // Make functions globally accessible
     window.editAttendance = editAttendance;
     window.deleteAttendance = deleteAttendance;
 
-    // Save attendance
     async function saveAttendance(formData) {
       const saveBtn = document.querySelector(
         '#attendance-form button[type="submit"]',
@@ -465,10 +454,9 @@ if (!Astro.locals.session) {
 
         const method = editingRecord ? "PUT" : "POST";
 
-        // FormData is automatically handled by fetch when passed as body
         const response = await fetch(url, {
           method,
-          body: formData, // Send FormData directly
+          body: formData, 
         });
 
         if (response.ok) {
@@ -487,7 +475,6 @@ if (!Astro.locals.session) {
       }
     }
 
-    // Event listeners
     document
       .getElementById("add-attendance-btn")
       .addEventListener("click", addAttendance);

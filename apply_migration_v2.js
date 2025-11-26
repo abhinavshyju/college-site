@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Try with relaxed SSL settings to avoid hanging
 const sql = postgres(process.env.DB_URL, {
     ssl: { rejectUnauthorized: false },
     connect_timeout: 10,

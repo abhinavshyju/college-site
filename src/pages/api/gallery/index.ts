@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { galleryImages } from "../../../db/schema/gallery";
 import { eq } from "drizzle-orm";
 
-// GET /api/gallery - Get all gallery images
+// GET /api/gallery
 export const GET: APIRoute = async ({ request, locals }) => {
   try {
     const url = new URL(request.url);
@@ -44,10 +44,10 @@ export const GET: APIRoute = async ({ request, locals }) => {
   }
 };
 
-// POST /api/gallery - Create new gallery image
+// POST /api/gallery
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
-    // Check authentication
+
     if (!locals.user) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -75,7 +75,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
 
-    // Validate file type
     if (!file.type.startsWith("image/")) {
       return new Response(JSON.stringify({ error: "File must be an image" }), {
         status: 400,
@@ -85,11 +84,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
       });
     }
 
-    // Upload to Supabase storage
     const { uploadImage } = await import("../../../lib/supabase");
     const imageUrl = await uploadImage(file, file.name);
 
-    // Save to database
+
     const database = locals.db;
     const [newImage] = await database
       .insert(galleryImages)

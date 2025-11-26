@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const GET: APIRoute = async () => {
     try {
-        const marks = await db()
+        const marks = await db
             .select()
             .from(internalMarksTable)
             .orderBy(desc(internalMarksTable.date));
@@ -46,7 +46,7 @@ export const POST: APIRoute = async ({ request }) => {
 
         const id = uuidv4();
 
-        await db().insert(internalMarksTable).values({
+        await db.insert(internalMarksTable).values({
             id,
             title,
             description,
