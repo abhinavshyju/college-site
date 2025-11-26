@@ -28,8 +28,7 @@ if (!Astro.locals.session) {
 
         <div class="rounded-lg border bg-card">
             <div class="p-6">
-                <div id="marks-list" class="space-y-4">
-                </div>
+                <div id="marks-list" class="space-y-4"></div>
             </div>
         </div>
     </section>
@@ -181,13 +180,13 @@ if (!Astro.locals.session) {
                         <label
                             for="file"
                             class="block text-sm font-medium text-gray-700"
-                            >Upload PDF (Optional)</label
+                            >Upload Document (Optional)</label
                         >
                         <input
                             type="file"
                             id="file"
                             name="file"
-                            accept="application/pdf"
+                            accept="image/*,video/*,application/pdf"
                             class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-primary file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-primary/90"
                         />
                         <div id="current-file-container" class="mt-2 hidden">
@@ -198,13 +197,13 @@ if (!Astro.locals.session) {
                                     href="#"
                                     target="_blank"
                                     class="text-blue-600 hover:underline"
-                                    >View PDF</a
+                                    >View File</a
                                 >
                             </p>
                         </div>
                         <p class="mt-1 text-xs text-gray-500">
-                            Upload marks sheet (PDF only). Leave empty to keep
-                            existing file.
+                            Upload marks sheet (Image, Video, PDF). Leave empty
+                            to keep existing file.
                         </p>
                     </div>
 
@@ -290,7 +289,7 @@ if (!Astro.locals.session) {
 
             filteredPrograms.forEach((p) => {
                 const option = document.createElement("option");
-                option.value = p.name; 
+                option.value = p.name;
                 option.textContent = p.name;
                 programSelect.appendChild(option);
             });

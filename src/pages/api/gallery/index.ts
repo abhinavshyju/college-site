@@ -2,7 +2,6 @@ import type { APIRoute } from "astro";
 import { galleryImages } from "../../../db/schema/gallery";
 import { eq } from "drizzle-orm";
 
-// GET /api/gallery
 export const GET: APIRoute = async ({ request, locals }) => {
   try {
     const url = new URL(request.url);
@@ -44,7 +43,6 @@ export const GET: APIRoute = async ({ request, locals }) => {
   }
 };
 
-// POST /api/gallery
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
 
@@ -73,15 +71,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
           },
         }
       );
-    }
-
-    if (!file.type.startsWith("image/")) {
-      return new Response(JSON.stringify({ error: "File must be an image" }), {
-        status: 400,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
     }
 
     const { uploadImage } = await import("../../../lib/supabase");

@@ -18,14 +18,14 @@ const StudentPlacementsCarousel: React.FC = () => {
       name: "Neeraj",
       company: "Wipro",
       position: "",
-      year: "2023",
+      year: "2022 - 23",
       image: "https://grvnijrdyyevvtlcssoo.supabase.co/storage/v1/object/sign/placements/WhatsApp%20Image%202025-11-21%20at%2014.31.14_f47e4f4c.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84NzUyZWZjOS1mZGY0LTRhMzctODA3My1kYTUzYWNhNmVhZGUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwbGFjZW1lbnRzL1doYXRzQXBwIEltYWdlIDIwMjUtMTEtMjEgYXQgMTQuMzEuMTRfZjQ3ZTRmNGMuanBnIiwiaWF0IjoxNzYzODk3MzE4LCJleHAiOjE3OTU0MzMzMTh9.iwOmP0Jru-B3ATOedokfTwlGzJ52yLZsG9GkqB8cB2E",
     },
     {
       name: "Ajith dolichan",
       company: "Acabes international",
       position: "",
-      year: "2023",
+      year: "2022 - 23",
       image: "https://grvnijrdyyevvtlcssoo.supabase.co/storage/v1/object/sign/placements/WhatsApp%20Image%202025-11-21%20at%2014.31.14_78f7ae73.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84NzUyZWZjOS1mZGY0LTRhMzctODA3My1kYTUzYWNhNmVhZGUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwbGFjZW1lbnRzL1doYXRzQXBwIEltYWdlIDIwMjUtMTEtMjEgYXQgMTQuMzEuMTRfNzhmN2FlNzMuanBnIiwiaWF0IjoxNzYzODk3OTUxLCJleHAiOjE3OTU0MzM5NTF9.A9zfSr6GJUxKoDgqNex6qmdrS3r7KlXT7mtKTs2-B4g",
     },
     {
@@ -40,9 +40,17 @@ const StudentPlacementsCarousel: React.FC = () => {
       name: "Abhinav p",
       company: "Orivios technologyes",
       position: "",
-      year: "2022-2025",
+      year: "2022 - 25",
       image:
         "",
+    },
+     {
+      name: "Abhinand T",
+      company: "Tata Consultancy Services",
+      position: "Support Cloud Engineer",
+      year: "2021 - 24",
+      image:
+        "https://grvnijrdyyevvtlcssoo.supabase.co/storage/v1/object/sign/placements/IMG_20251012_224608366%20(1)%20-%20ABHINAND.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84NzUyZWZjOS1mZGY0LTRhMzctODA3My1kYTUzYWNhNmVhZGUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwbGFjZW1lbnRzL0lNR18yMDI1MTAxMl8yMjQ2MDgzNjYgKDEpIC0gQUJISU5BTkQuanBnIiwiaWF0IjoxNzY0MTc3NzI1LCJleHAiOjE3OTU3MTM3MjV9._N91wUx8HVRNxTErsMO4_wkw2VZasVUjyNVqjFS8KPM",
     },
   ];
 
@@ -119,7 +127,7 @@ const StudentPlacementsCarousel: React.FC = () => {
               prevSlide();
               pauseAutoPlay();
             }}
-            className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-1.5 sm:p-2 shadow-lg transition-all duration-200 hover:scale-110"
+            className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-1.5 sm:p-2 shadow-lg transition-all duration-200 hover:scale-110"
           >
             <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6 text-gray-700" />
           </button>
@@ -129,7 +137,7 @@ const StudentPlacementsCarousel: React.FC = () => {
               nextSlide();
               pauseAutoPlay();
             }}
-            className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-1.5 sm:p-2 shadow-lg transition-all duration-200 hover:scale-110"
+            className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-1.5 sm:p-2 shadow-lg transition-all duration-200 hover:scale-110"
           >
             <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6 text-gray-700" />
           </button>
@@ -157,7 +165,7 @@ const StudentPlacementsCarousel: React.FC = () => {
                             target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(student.name)}&background=random`;
                           }}
                         />
-                        <div className="absolute inset-0 bg-black bg-opacity-0 transition-all hover:bg-opacity-50 flex flex-col justify-end p-4 sm:p-6">
+                        <div className="absolute inset-0 bg-black/0 transition-all hover:bg-black/60 flex flex-col justify-end p-4 sm:p-6">
                           <h4 className="text-base sm:text-lg font-semibold text-white mb-1 shadow-black drop-shadow-md">
                             {student.name}
                           </h4>
