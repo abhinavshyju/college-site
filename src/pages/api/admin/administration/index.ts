@@ -30,7 +30,7 @@ export const GET: APIRoute = async (ctx) => {
     });
   } catch (error) {
     console.log(error);
-    return new Response("Internal Server Error", { status: 500 });
+    return new Response(`Internal Server Error:${error} `, { status: 500 });
   }
 };
 
