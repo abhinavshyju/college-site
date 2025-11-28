@@ -6,12 +6,11 @@ async function initializeGallery() {
   try {
     console.log("Initializing gallery system...");
 
-
     await initializeStorageBucket();
     console.log("✅ Supabase storage bucket initialized");
 
     // Check if we already have images
-    const existingImages = await db.select().from(galleryImages);
+    const existingImages = await db().select().from(galleryImages);
 
     if (existingImages.length === 0) {
       console.log(
@@ -33,6 +32,5 @@ async function initializeGallery() {
     process.exit(1);
   }
 }
-
 
 initializeGallery();

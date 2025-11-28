@@ -52,7 +52,7 @@ const AdministrationSection: React.FC = () => {
         setLoading(true);
         setError(null);
         const res = await fetch("/api/admin/administration", {
-          credentials: "include",
+          method: "GET",
         });
         if (!res.ok) {
           throw new Error(`${res.status}`);
@@ -105,7 +105,13 @@ const AdministrationSection: React.FC = () => {
   }, []);
 
   // A reusable function to render a single staff member's card
-  const StaffCard = ({ person, index }: { person: StaffItem; index: number }) => (
+  const StaffCard = ({
+    person,
+    index,
+  }: {
+    person: StaffItem;
+    index: number;
+  }) => (
     <div
       key={index}
       className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
@@ -135,7 +141,10 @@ const AdministrationSection: React.FC = () => {
           <div className="flex items-center text-gray-600 text-sm">
             <Mail className="h-4 w-4 mr-2" />
             {person.email ? (
-              <a href={`mailto:${person.email}`} className="hover:text-blue-600">
+              <a
+                href={`mailto:${person.email}`}
+                className="hover:text-blue-600"
+              >
                 {person.email}
               </a>
             ) : (
@@ -196,8 +205,8 @@ const AdministrationSection: React.FC = () => {
           selectedCategory === "principal"
             ? staffData.principal
             : selectedCategory === "hods"
-              ? staffData.hods
-              : staffData.nonTeaching;
+            ? staffData.hods
+            : staffData.nonTeaching;
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.map((person, index) => (
@@ -235,7 +244,8 @@ const AdministrationSection: React.FC = () => {
           <div className="bg-blue-600 text-white px-6 py-8">
             <h1 className="text-3xl font-bold mb-2">Administration</h1>
             <p className="text-blue-100">
-              Meet our dedicated team of administrators, faculty, and support staff
+              Meet our dedicated team of administrators, faculty, and support
+              staff
             </p>
           </div>
           <div className="border-b border-gray-200">
@@ -245,10 +255,11 @@ const AdministrationSection: React.FC = () => {
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className={`mr-8 py-4 px-1 border-b-2 font-medium text-sm ${selectedCategory === category.id
+                    className={`mr-8 py-4 px-1 border-b-2 font-medium text-sm ${
+                      selectedCategory === category.id
                         ? "border-blue-500 text-blue-600"
                         : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                      }`}
+                    }`}
                   >
                     {category.label}
                   </button>
