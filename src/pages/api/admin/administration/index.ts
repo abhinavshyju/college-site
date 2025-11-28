@@ -6,25 +6,33 @@ import { departmentsTable } from "@/db/schema/academics";
 import { Auth } from "@/lib/auth";
 
 export const GET: APIRoute = async (ctx) => {
-  const db = ctx.locals.db;
+  try {
+    const db = ctx.locals.db;
 
-  const rows = await db
-    .select({
-      staff: staffTable,
-      departmentName: departmentsTable.name,
-    })
-    .from(staffTable)
-    .leftJoin(departmentsTable, eq(staffTable.departmentId, departmentsTable.id))
-    .orderBy(asc(staffTable.displayOrder));
+    const rows = await db
+      .select({
+        staff: staffTable,
+        departmentName: departmentsTable.name,
+      })
+      .from(staffTable)
+      .leftJoin(
+        departmentsTable,
+        eq(staffTable.departmentId, departmentsTable.id)
+      )
+      .orderBy(asc(staffTable.displayOrder));
 
-  const result = rows.map(row => ({
-    ...row.staff,
-    departmentName: row.departmentName
-  }));
+    const result = rows.map((row) => ({
+      ...row.staff,
+      departmentName: row.departmentName,
+    }));
 
-  return new Response(JSON.stringify(result), {
-    headers: { "Content-Type": "application/json" },
-  });
+    return new Response(JSON.stringify(result), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.log(error);
+    return new Response("Internal Server Error", { status: 500 });
+  }
 };
 
 export const POST: APIRoute = async (ctx) => {
@@ -45,7 +53,8 @@ export const POST: APIRoute = async (ctx) => {
     phone: body.phone ? String(body.phone) : null,
     image: body.image ? String(body.image) : null,
     departmentId: body.departmentId ? String(body.departmentId) : null,
-    displayOrder: typeof body.displayOrder === 'number' ? body.displayOrder : 99,
+    displayOrder:
+      typeof body.displayOrder === "number" ? body.displayOrder : 99,
     category: String(body.category || "faculty"),
     achievements: Array.isArray(body.achievements) ? body.achievements : null,
   } as const;
