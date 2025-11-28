@@ -8,7 +8,6 @@ import { Auth } from "@/lib/auth";
 export const GET: APIRoute = async (ctx) => {
   try {
     const db = ctx.locals.db;
-
     const rows = await db
       .select({
         staff: staffTable,
