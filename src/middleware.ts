@@ -4,13 +4,10 @@ import { db } from "./db";
 
 export const onRequest = defineMiddleware(async (context, next) => {
   context.locals.db = db();
-
   context.locals.auth = Auth.getInstance(context.locals.db);
   const auth = context.locals.auth;
 
-  console.log("Middleware running");
   const sessionId = context.cookies.get(Auth.sessionCookieName)?.value;
-  console.log(sessionId);
   if (!sessionId) {
     console.log("no session id");
     context.locals.user = null;

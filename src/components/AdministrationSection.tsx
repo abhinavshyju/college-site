@@ -92,6 +92,7 @@ const AdministrationSection: React.FC = () => {
         }
         setStaffData(nextData);
       } catch (e: any) {
+        console.error("Error fetching administration data:", e);
         if (isCancelled) return;
         setError(e?.message || "Failed to load data");
       } finally {

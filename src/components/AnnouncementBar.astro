@@ -1,9 +1,8 @@
 ---
-import { db } from "@/db";
 import { announcementsTable } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
-
-const announcements = await db()
+const { db } = Astro.locals;
+const announcements = await db
   .select()
   .from(announcementsTable)
   .where(eq(announcementsTable.active, true))
